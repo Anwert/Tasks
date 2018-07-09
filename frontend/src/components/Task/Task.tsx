@@ -71,12 +71,15 @@ class TaskComponent extends React.Component<IConnectedStore & IConnectedDispatch
       return (
         <div>
           <div className="task task__incomplete" onClick={this.openModal}>
-            <button onClick={this.onCompleteTask} className="btn btn__complete"/>
+            <div className='task__place__for__button'>
+              <button onClick={this.onCompleteTask} className="btn btn__complete"/>
+            </div>
             <span className="task__value">
               {this.props.task.value}
-              <div className="task__time">
+              <br/>
+              <span className="task__time">
                 {this.props.task.date.toDateString()} {this.props.task.date.getHours()}:{minutes}
-              </div>
+              </span>
             </span>
           </div>
           <ModalAddOrEditTask
@@ -92,12 +95,13 @@ class TaskComponent extends React.Component<IConnectedStore & IConnectedDispatch
           <button className="btn btn__completed" disabled={true}>
             <i className="fa fa-check" aria-hidden="true" />
           </button>
-          <div className="task__value task__completed">
-            <div>{this.props.task.value}</div>
-            <div className="task__time task__time__completed">
+          <span className="task__value task__completed">
+            {this.props.task.value}
+            <br/>
+            <span className="task__time task__time__completed">
               {this.props.task.date.toDateString()} {this.props.task.date.getHours()}:{minutes}
-            </div>
-          </div>
+            </span>
+          </span>
         </div>
       );
     }
