@@ -1,0 +1,32 @@
+.add__button
+  $bgcolor = #ba77ff
+  text-align: center
+  width: 35px
+  height: 35px
+  font-size: 27px
+  background-color: $bgcolor
+  color: white
+  border: 0
+  border-radius: 50%
+  padding-bottom: 8px
+  outline: 0
+  display: block
+  margin-top: 15px
+
+  &:hover, &:focus
+    cursor: pointer
+    background: lighten($bgcolor, 10%)
+  &:active
+    background: lighten($bgcolor, 20%)
+
+  &__calendar
+    margin-left: 153px
+
+  &__home
+    margin-left: 60px
+
+  &__list
+    margin-left: 60px
+
+  &__overview
+    display: inline-block

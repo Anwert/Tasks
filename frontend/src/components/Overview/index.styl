@@ -1,0 +1,53 @@
+.overview__label
+  font-size: 2em
+  margin-bottom: 15px
+
+.statistics
+  display: inline-block
+
+  &__text
+    width: auto
+    text-align: center
+    text-transform: uppercase
+
+    &__total
+      font-size: 4em
+
+      &__label
+        color: grey
+        font-size: .9em
+
+    &__percents
+      color: rgba(255, 255, 255, .85)
+      margin: 10px
+
+      &__numbers
+        margin: 0
+        display: inline-block
+
+        &__number
+          display: inline-block
+          margin-left: 2px
+
+.month__btn
+  left: 0
+  padding: 10px
+  margin: 10px 1px
+  color: rgba(255, 255, 255, .7)
+  outline: 0
+  border: 0
+  font-size: .9em
+  $bgcolor = #ba77ff
+  background: $bgcolor
+
+  &:hover
+    cursor: pointer
+    background: lighten($bgcolor, 25%)
+
+  &--active
+    background: rgba(255, 255, 255, .9)
+    color: rgba(0, 0, 0, .9)
+
+    &:hover
+      background: white
+      color: black

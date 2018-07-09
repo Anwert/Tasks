@@ -1,104 +1,111 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
+import { Action } from "../actions";
 
-import { Action } from '../actions'
-
-export namespace Store {
-
-  export type Task = {
-    id?:number,
-    date: Date,
-    value: string,
-    completed: boolean,
-  }
-
-  export type Tasks = Task[]
-
-  export type FilterTasks = string
-
-  export type FilterTasksByMonth = number
-
-  export type All = {
-    tasks: Tasks
-    filterTasks: FilterTasks
-    filterTasksByMonth: FilterTasksByMonth
-  }
+export interface ITask {
+  id?: string;
+  value: string;
+  date: Date;
+  completed: boolean;
 }
 
-const initialState: Store.Tasks = [{
-  id: 0,
-  value: "Task from Store",
-  date: new Date(2018, 5, 23),
-  completed: false,
-}, {
-  id: 1,
-  value: "Second task",
-  date: new Date(2018, 5, 23),
-  completed: false,
-}, {
-  id: 2,
-  value: "Third Task",
-  date: new Date(2018, 5, 23),
-  completed: false
-}]
+export interface IStoreAll {
+  tasks: ITask[];
+  filterTasks: string;
+  filterTasksByMonth: number;
+}
 
-function tasks (state: Store.Tasks = initialState, action: Action): Store.Tasks {
+const ID = () => {
+  return "_" + Math.random().toString(36).substr(2, 9);
+};
+
+const initialState: ITask[] = [{
+  id: ID(),
+  value: "First task",
+  date: new Date(),
+  completed: false,
+}, {
+  id: ID(),
+  value: "Second task",
+  date: new Date(),
+  completed: false,
+}, {
+  id: ID(),
+  value: "Third Task",
+  date: new Date(),
+  completed: false,
+}];
+
+const findByID = (state: ITask[], id: string) => {
+  let index = 0;
+  state.map((el) => {
+    if (el.id === id) {
+      index = state.indexOf(el);
+    }
+  });
+  return index;
+};
+
+function tasks(state: ITask[] = initialState, action: Action): ITask[] {
   switch (action.type) {
-    case 'ADD_TASK':
+    case "ADD_TASK":
       return [...state,
         {
-          id: state[state.length-1].id+1,
+          id: ID(),
           value: action.task.value,
           date: action.task.date,
           completed: false,
-        }
-      ]
-    case 'DELETE_TASK':
+        },
+      ];
+    case "DELETE_TASK":
+      const indexForDelete = findByID(state, action.id);
       return [
-        ...state.slice(0, action.id),
-        ...state.slice(action.id + 1),
-      ]
-    case 'COMPLETE_TASK':
+        ...state.slice(0, indexForDelete),
+        ...state.slice(indexForDelete + 1),
+      ];
+    case "COMPLETE_TASK":
+      const indexForComplete = findByID(state, action.id);
       return [
-        ...state.slice(0, action.id),
+        ...state.slice(0, indexForComplete),
         {
-          id: state[action.id].id,
-          value: state[action.id].value,
-          date: state[action.id].date,
+          id: state[indexForComplete].id,
+          value: state[indexForComplete].value,
+          date: state[indexForComplete].date,
           completed: true,
         },
-        ...state.slice(action.id + 1),
-      ]
-    case 'EDIT_TASK':
-      console.log('editing task', action.task)
+        ...state.slice(indexForComplete + 1),
+      ];
+    case "EDIT_TASK":
+      const indexForEdit = findByID(state, action.task.id);
       return [
-        ...state.slice(0, action.task.id),
+        ...state.slice(0, indexForEdit),
         {
           id: action.task.id,
           value: action.task.value,
           date: action.task.date,
           completed: false,
         },
-        ...state.slice(action.task.id + 1),
-      ]
+        ...state.slice(indexForEdit + 1),
+      ];
+    }
+  return state;
+}
+
+function filterTasks(state: string = "", action: Action): string {
+  if (action.type === "FIND_TASK") {
+    return action.value;
   }
-
-  return state
+  return state;
 }
 
-function filterTasks (state: Store.FilterTasks = '', action: Action): Store.FilterTasks {
-  if (action.type === 'FIND_TASK')
-    return action.value
-  return state
+function filterTasksByMonth(state: number = new Date().getUTCMonth(), action: Action): number {
+  if (action.type === "FILTER_TASKS_BY_MONTH") {
+    return action.month;
+  }
+  return state;
 }
 
-function filterTasksByMonth (state: Store.FilterTasksByMonth = new Date().getUTCMonth(), action: Action): Store.FilterTasksByMonth {
-  if (action.type === 'FILTER_TASKS_BY_MONTH')
-    return action.month
-  return state
-}
-
-export const reducers = combineReducers<Store.All>({
-  tasks,
+export const reducers = combineReducers<IStoreAll>({
   filterTasks,
   filterTasksByMonth,
-})
+  tasks,
+});

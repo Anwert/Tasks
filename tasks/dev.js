@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 
-const gulp = require('gulp');
+const gulp = require('gulp')
 
-module.exports = function() {
+module.exports = function () {
   return gulp.series(
-      'build',
-      gulp.parallel(
-          'serve',
-          function() {
-            gulp.watch('frontend/styles/**/*.styl', gulp.series('styles'));
-            gulp.watch('frontend/assets/**/*.*', gulp.series('assets'));
-            gulp.watch('frontend/views/**/*.*', gulp.series('views'));
-          }
-      )
+    'build',
+    gulp.parallel(
+      'serve',
+      function () {
+        gulp.watch(['frontend/styles/**/*.styl', 'frontend/src/components/**/*.styl'], gulp.series('styles'))
+        gulp.watch('frontend/assets/**/*.*', gulp.series('assets'))
+        gulp.watch('frontend/views/**/*.*', gulp.series('views'))
+      }
+    )
   )
-};
+}

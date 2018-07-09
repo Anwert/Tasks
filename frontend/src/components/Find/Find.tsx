@@ -1,45 +1,45 @@
-import * as React from 'react'
-import * as redux from 'redux'
-import { connect } from 'react-redux'
+import * as React from "react";
+import { connect } from "react-redux";
+import * as redux from "redux";
+import * as action from "../../actions";
+import { IStoreAll } from "../../reducers";
 
-import * as action from '../../actions'
-import { Store } from '../../reducers'
-
-interface OwnProps {}
-
-interface OwnState {}
-
-interface ConnectedStore {}
-
-interface ConnectedDispatch {
-  findTask: (value: string) => void
+interface IConnectedDispatch {
+  findTask: (value: string) => void;
 }
 
-const mapStateToProps = (store: Store.All, ownProps: OwnProps): ConnectedStore => ({})
+const mapStateToProps = (store: IStoreAll) => ({});
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): ConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
   findTask: (value: string) => {
-    dispatch(action.findTask(value))
+    dispatch(action.findTask(value));
   },
-})
+});
 
-class FindComponent extends React.Component<ConnectedStore & ConnectedDispatch & OwnProps, OwnState> {
+class FindComponent extends React.Component<IConnectedDispatch> {
 
-  onFindTask = () => {
-    this.props.findTask(this.findTaskInput.value)
+  private findTaskInput: HTMLInputElement;
+
+  public render() {
+    return (
+      <div className="searchtask">
+        <input type="text" ref={(input) => {this.findTaskInput = input; }} className="searchtask__input"/>
+        <img
+          onClick={this.onFindTask}
+          src="../../assets/search.png"
+          width="30"
+          height="30"
+          alt="search"
+          className="searchtask__btn"
+        />
+      </div>
+    );
   }
 
-  findTaskInput: HTMLInputElement
-
-  render () {
-    return (
-      <div>
-        <input ref={(input)=>{this.findTaskInput = input}}/>
-        <button onClick={this.onFindTask}>Find</button>
-      </div>
-    )
+  private onFindTask = () => {
+    this.props.findTask(this.findTaskInput.value);
   }
 }
 
-export const Find: React.ComponentClass<OwnProps> =
-  connect(mapStateToProps, mapDispatchToProps)(FindComponent)
+export const Find: React.ComponentClass =
+  connect(mapStateToProps, mapDispatchToProps)(FindComponent);

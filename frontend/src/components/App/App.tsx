@@ -1,84 +1,85 @@
-import * as React from 'react'
-import * as redux from 'redux'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import * as React from "react";
+import Calendar from "react-calendar/dist/entry.nostyle";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import * as redux from "redux";
+import * as action from "../../actions";
+import { IStoreAll, ITask } from "../../reducers";
+import { Find } from "../Find/Find";
+import { MenuButton } from "../Menu/MenuButton";
+import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
+import { Task } from "../Task/Task";
 
-import * as action from '../../actions'
-import { Store } from '../../reducers'
-import { Task } from '../Task/Task'
-import { ModalAddOrEditTask } from '../ModalAddOrEditTask/ModalAddOrEditTask'
-import Calendar from 'react-calendar'
-// import Calendar from 'react-calendar/dist/entry.nostyl'
-import { Find } from '../Find/Find'
-
-interface OwnProps {}
-
-interface OwnState {
-  date: Date,
-  modalIsOpened: boolean,
+interface IOwnState {
+  date: Date;
+  modalIsOpened: boolean;
 }
 
-interface ConnectedStore {
-  tasks: Store.Tasks
+interface IConnectedStore {
+  tasks: ITask[];
 }
 
-interface ConnectedDispatch {}
+const mapStateToProps = (store: IStoreAll) => ({
+  tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
+});
 
-const mapStateToProps = (store: Store.All, ownProps: OwnProps): ConnectedStore => ({
-  tasks: store.tasks.filter(task => task.value.includes(store.filterTasks))
-})
+const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>) => ({});
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): ConnectedDispatch => ({})
+class AppComponent extends React.Component<IConnectedStore, IOwnState> {
 
-class AppComponent extends React.Component<ConnectedStore & ConnectedDispatch & OwnProps, OwnState> {
-
-  constructor(props: ConnectedStore & ConnectedDispatch & OwnProps) {
-    super(props)
+  constructor(props: IConnectedStore) {
+    super(props);
     this.state = {
       date: new Date(),
       modalIsOpened: false,
-    }}
-
-  onClickDay = (date:Date) => {
-    this.setState({
-      date: date
-    })}
-
-  openModal = () => {
-    this.setState({
-      modalIsOpened: true,
-    })
+    };
   }
 
-  closeModal = () => {
-    this.setState({modalIsOpened: false});
-  }
-
-  render () {
+  public render() {
     return (
-      <div>
-        <Link to='/menu'>Menu</Link>
+      <div className="App">
+        <MenuButton />
         <Find />
         <Calendar
           onClickDay={this.onClickDay}
-          locale = "en"
+          locale="en"
+          value={this.state.date}
         />
-        <ul>
-          { this.props.tasks.map((item) => {
-              if ( item.date.getFullYear() === this.state.date.getFullYear()
-                && item.date.getUTCMonth() === this.state.date.getUTCMonth()
-                && item.date.getDate() === this.state.date.getDate()
-              ) return (
-                <li key={item.id}>
-                  <Task id={item.id}/>
-                </li>
-              )})}
+        <ul className="tasks">
+          {this.showTasks()}
         </ul>
-        <button onClick={this.openModal}>Add</button>
+        <button onClick={this.openModal} className="add__button add__button__calendar">+</button>
         <ModalAddOrEditTask isOpen={this.state.modalIsOpened} onRequestClose={this.closeModal}/>
-    </div> )
+      </div>
+    );
   }
+
+  private onClickDay = (date: Date) => {
+    this.setState({date});
+  }
+
+  private openModal = () => {
+    this.setState({modalIsOpened: true});
+  }
+
+  private closeModal = () => {
+    this.setState({modalIsOpened: false});
+  }
+
+  private showTasks = () => {
+    return this.props.tasks.map((item) => {
+        if (item.date.getFullYear() === this.state.date.getFullYear()
+          && item.date.getUTCMonth() === this.state.date.getUTCMonth()
+          && item.date.getDate() === this.state.date.getDate()) {
+            return (
+              <li key={item.id}>
+                <Task id={item.id}/>
+              </li>
+            );
+          }
+        });
+    }
 }
 
-export const App: React.ComponentClass<OwnProps> =
-  connect(mapStateToProps, mapDispatchToProps)(AppComponent)
+export const App: React.ComponentClass =
+  connect(mapStateToProps, mapDispatchToProps)(AppComponent);

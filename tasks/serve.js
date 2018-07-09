@@ -1,16 +1,15 @@
-'use strict';
+'use strict'
 
-const browserSync = require('browser-sync').create();
-const path = require('path');
+const browserSync = require('browser-sync').create()
 
-module.exports = function() {
-  return function() {
+module.exports = function () {
+  return function () {
     browserSync.init({
       server: {
-          baseDir: 'public',
-          index: 'index.html'
+        baseDir: 'public',
+        index: 'index.html'
       }
-    });
-    browserSync.watch('public/**/*.*').on('change', browserSync.reload);
-  };
-};
+    })
+    browserSync.watch('public/**/*.*').on('change', browserSync.reload)
+  }
+}

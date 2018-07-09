@@ -1,74 +1,39 @@
-import { Store } from '../reducers'
-
-type Q<T> = { request: T }
-type S<T> = { response: T }
-type E = { error: Error }
-
-type QEmpty = Q<null>
-type QValue = Q<{ value: string }>
+import { ITask } from "../reducers";
 
 export type Action =
-// UI actions
-   { type: 'ADD_TASK', task: Store.Task }
-|  { type: 'FIND_TASK', value: string }
-|  { type: 'COMPLETE_TASK', id: number }
-|  { type: 'FILTER_TASKS_BY_MONTH', month: number }
-|  { type: 'DELETE_TASK', id: number }
-|  { type: 'EDIT_TASK', task: Store.Task}
+   { type: "ADD_TASK", task: ITask }
+|  { type: "FIND_TASK", value: string }
+|  { type: "COMPLETE_TASK", id: string }
+|  { type: "FILTER_TASKS_BY_MONTH", month: number }
+|  { type: "DELETE_TASK", id: string }
+|  { type: "EDIT_TASK", task: ITask};
 
-// Async actions...
-| ({ type: 'SAVE_TASKS_REQUEST' } & QValue)
-| ({ type: 'SAVE_TASKS_SUCCESS' } & QValue & S<{}>)
-| ({ type: 'SAVE_TASKS_ERROR'   } & QValue & E)
+export const addTask = (task: ITask): Action => ({
+  type: "ADD_TASK",
+  task,
+});
 
-| ({ type: 'LOAD_TASKS_REQUEST' } & QEmpty)
-| ({ type: 'LOAD_TASKS_SUCCESS' } & QEmpty & S<{ value: string }>)
-| ({ type: 'LOAD_TASKS_ERROR'   } & QEmpty & E)
-
-export const addTask = (task: Store.Task): Action => ({
-  type: 'ADD_TASK', task: task,
-})
-
-export const deleteTask = (id: number): Action => ({
-  type: 'DELETE_TASK', id: id,
-})
+export const deleteTask = (id: string): Action => ({
+  type: "DELETE_TASK",
+  id,
+});
 
 export const findTask = (value: string): Action => ({
-  type: 'FIND_TASK', value: value,
-})
+  type: "FIND_TASK",
+  value,
+});
 
-export const completeTask = (id: number): Action => ({
-  type: 'COMPLETE_TASK', id: id,
-})
+export const completeTask = (id: string): Action => ({
+  type: "COMPLETE_TASK",
+  id,
+});
 
 export const filterTasksByMonth = (month: number): Action => ({
-  type: 'FILTER_TASKS_BY_MONTH', month: month,
-})
+  type: "FILTER_TASKS_BY_MONTH",
+  month,
+});
 
-export const editTask = (task: Store.Task): Action => ({
-  type: 'EDIT_TASK', task: task,
-})
-
-export type ApiActionGroup<_Q, _S> = {
-  request: (q?: _Q)         => Action & Q<_Q>
-  success: (s: _S, q?: _Q)  => Action & Q<_Q> & S<_S>
-  error: (e: Error, q?: _Q) => Action & Q<_Q> & E
-}
-
-export const saveTasks: ApiActionGroup<{ value: string }, {}> = {
-  request: (request) =>
-    ({ type: 'SAVE_TASKS_REQUEST', request }),
-  success: (response, request) =>
-    ({ type: 'SAVE_TASKS_SUCCESS', request, response }),
-  error: (error, request) =>
-    ({ type: 'SAVE_TASKS_ERROR',   request, error }),
-}
-
-export const loadTasks: ApiActionGroup<null, { value: string }> = {
-  request: (request) =>
-    ({ type: 'LOAD_TASKS_REQUEST', request: null }),
-  success: (response, request) =>
-    ({ type: 'LOAD_TASKS_SUCCESS', request: null, response }),
-  error: (error, request) =>
-    ({ type: 'LOAD_TASKS_ERROR',   request: null, error }),
-}
+export const editTask = (task: ITask): Action => ({
+  type: "EDIT_TASK",
+  task,
+});

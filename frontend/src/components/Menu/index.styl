@@ -1,0 +1,20 @@
+.menu
+  display: block
+  &__el
+    display: block
+    width: 180px
+    border-bottom: solid .5px rgba(255, 255, 255, .2)
+    padding: 10px
+
+    $bgcolor = #ba77ff
+    &:hover, &:focus
+      cursor: pointer
+      background: lighten($bgcolor, 10%)
+    &:active
+      background: lighten($bgcolor, 20%)
+
+    i
+      margin-right: 12px
+
+.fa-bars
+  margin-bottom: 20px

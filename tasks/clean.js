@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const del = require('del');
+const del = require('del')
 
-module.exports = function() {
-  return function() {
-    return del(['public', 'manifest']);
-  };
-};
+module.exports = function () {
+  return function () {
+    return del(['public', 'manifest'])
+  }
+}

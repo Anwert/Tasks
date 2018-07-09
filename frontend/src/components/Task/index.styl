@@ -1,0 +1,81 @@
+$heightAndWidth = 35px
+
+.tasks
+  margin: 0
+  padding: 0
+  margin-top: 5px
+  margin-bottom: 10px
+
+  li
+    list-style-type: none
+
+  .task
+    display: inline-block
+    margin-left: 5px
+    width: 350px
+    border-bottom: solid .5px rgba(255, 255, 255, .2)
+    padding-right: 30px
+    padding-top: 10px
+    padding-bottom: 10px
+    word-wrap: break-word
+
+    &__incomplete
+      $bgcolor = rgba(255, 255, 255, .2)
+      &:hover, &:focus
+        cursor: pointer
+        background: $bgcolor
+      &:active
+        background: lighten($bgcolor, 20%)
+
+    &__value
+      position: relative
+      display: inline
+      top: 3px
+
+    &__time
+      font-size: 75%
+      $timecolor = #c0c5c4
+      color: $timecolor
+
+      &__completed
+        color: grey
+
+    &__completed
+        position: relative
+        top: 3px
+        transition: .1s linear
+        height: 38px
+        color: grey
+        .time
+          color: grey
+
+  .btn
+    height: $heightAndWidth
+    width: $heightAndWidth
+    margin-right: 10px
+    border-radius: 50%
+    float: left
+
+    &__complete
+      $borderColor = grey
+      border: 2px solid $borderColor
+      background: none
+
+      &:hover
+        cursor: pointer
+
+      &:enabled
+        outline: 0
+
+        &:hover
+          border: 2px solid lighten($borderColor, 30%)
+          background: lighten(black, 20%)
+          outline: 0
+
+
+    &__completed
+      $bgcolor = #38a093
+      border: 2px solid $bgcolor
+      background: $bgcolor
+      &:hover
+        cursor: default
