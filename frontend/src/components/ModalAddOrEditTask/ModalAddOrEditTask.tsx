@@ -13,6 +13,7 @@ interface IOwnProps {
 }
 
 interface IOwnState {
+  emptyInput: boolean;
   dateInputError: boolean;
   date: Date;
 }
@@ -50,6 +51,7 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
     super(props);
 
     this.state = {
+      emptyInput: false,
       dateInputError: false,
       date: props.task ? props.task.date : new Date(),
     };
@@ -63,6 +65,7 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
           className="modal"
           overlayClassName="overlay"
         >
+          {this.showInputIsEmpty()}
           {this.showDateError()}
           <Calendar
             onClickDay={this.onClickDay}
@@ -75,15 +78,27 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
     );
   }
 
+  private showInputIsEmpty = () => {
+    if (this.state.emptyInput) {
+      return (
+        <div>Enter your task!</div>
+      );
+    }
+  }
+
   private showDateError = () => {
-   if (this.state.dateInputError) {
-     return (
-       <div>Date input error!</div>
-     );
-   }
+    if (this.state.dateInputError) {
+      return (
+        <div>Date input error!</div>
+      );
+    }
   }
 
   private onAddOrEditTask = () => {
+      let dateInputError = false;
+      let emptyInput = false;
+      this.setState({dateInputError: false});
+      this.setState({emptyInput: false});
       if (+this.taskHoursInput.value > 59
         || +this.taskHoursInput.value < 0
         || +this.taskMinutesInput.value > 59
@@ -92,7 +107,13 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
         || isNaN(+this.taskMinutesInput.value)
       ) {
         this.setState({dateInputError: true});
-      } else {
+        dateInputError = true;
+      }
+      if (this.taskInput.value.length < 1) {
+        this.setState({emptyInput: true});
+        emptyInput = true;
+      }
+      if (dateInputError === false && emptyInput === false) {
         this.task = {
           value: this.taskInput.value,
           date: new Date(
@@ -105,6 +126,7 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
           completed: false,
         };
         this.setState({dateInputError: false});
+        this.setState({emptyInput: false});
         this.props.onRequestClose();
         if (this.props.task) {
           this.task = {id: this.props.task.id, ...this.task};
