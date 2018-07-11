@@ -10,6 +10,7 @@ interface IOwnProps {
   task?: ITask;
   isOpen: boolean;
   onRequestClose: () => void;
+  date?: Date;
 }
 
 interface IOwnState {
@@ -53,11 +54,19 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
     this.state = {
       emptyInput: false,
       dateInputError: false,
-      date: props.task ? props.task.date : new Date(),
+      date: props.task ? props.task.date : props.date ? props.date : new Date(),
     };
   }
 
+  public componentWillReceiveProps(nextProps: IOwnProps) {
+    if (nextProps.date !== this.state.date) {
+      this.setState({ date: nextProps.date });
+    }
+  }
+
   public render() {
+    console.log('state', this.state)
+    console.log('props', this.props)
     return (
         <ReactModal
           isOpen={this.props.isOpen}
