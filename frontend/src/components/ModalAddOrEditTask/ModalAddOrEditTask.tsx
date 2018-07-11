@@ -127,6 +127,8 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
         };
         this.setState({dateInputError: false});
         this.setState({emptyInput: false});
+        dateInputError = false;
+        emptyInput = false;
         this.props.onRequestClose();
         if (this.props.task) {
           this.task = {id: this.props.task.id, ...this.task};
