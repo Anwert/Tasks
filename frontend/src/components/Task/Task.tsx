@@ -16,6 +16,7 @@ interface IConnectedStore {
 
 interface IConnectedDispatch {
   completeTask: (id: string) => void;
+  undoCompleteTask: (id: string) => void;
 }
 
 interface IOwnState {
@@ -30,6 +31,9 @@ const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore
 const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
   completeTask: (id: string) => {
     dispatch(action.completeTask(id));
+  },
+  undoCompleteTask: (id: string) => {
+    dispatch(action.undoCompleteTask(id));
   },
 });
 
@@ -62,6 +66,14 @@ class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDisp
     this.props.completeTask(this.props.id);
   }
 
+  onUndoCompleteTask = () => {
+    this.setState({
+      completed: false,
+      modalIsOpened: false,
+    });
+    this.props.undoCompleteTask(this.props.id);
+  }
+
   private showTask = () => {
     let minutes = this.props.task.date.getMinutes().toString();
     if (this.props.task.date.getMinutes() < 10) {
@@ -71,9 +83,7 @@ class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDisp
       return (
         <div>
           <div className="task task__incomplete" onClick={this.openModal}>
-            <div className='task__place__for__button'>
-              <button onClick={this.onCompleteTask} className="btn btn__complete"/>
-            </div>
+            <button onClick={this.onCompleteTask} className="btn btn__complete"/>
             <span className="task__value">
               {this.props.task.value}
               <br/>
@@ -92,7 +102,7 @@ class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDisp
     } else {
       return (
         <div className="task">
-          <button className="btn btn__completed" disabled={true}>
+          <button className="btn btn__completed" onClick={this.onUndoCompleteTask}>
             <i className="fa fa-check" aria-hidden="true" />
           </button>
           <span className="task__value task__completed">

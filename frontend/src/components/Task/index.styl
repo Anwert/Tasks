@@ -84,4 +84,6 @@ $heightAndWidth = 35px
       background: $bgcolor
 
       &:hover
-        cursor: default
+        $bgcolor = lighten($bgcolor, 10%)
+        border: 2px solid $bgcolor
+        background: $bgcolor

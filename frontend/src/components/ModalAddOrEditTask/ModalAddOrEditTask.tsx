@@ -85,10 +85,14 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     );
   }
 
+  private handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.select();
+  }
+
   private showInputIsEmpty = () => {
     if (this.state.emptyInput) {
       return (
-        <div>Enter your task!</div>
+        <div className='error'>Enter your task!</div>
       );
     }
   }
@@ -96,7 +100,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
   private showDateError = () => {
     if (this.state.dateInputError) {
       return (
-        <div>Date input error!</div>
+        <div className='error'>Date input error!</div>
       );
     }
   }
@@ -164,6 +168,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
           ref={(input) => {this.taskHoursInput = input; }}
           defaultValue={this.state.date.getHours().toString()}
           placeholder={this.state.date.getHours().toString()}
+          onFocus={this.handleFocus}
         />
         :
         <input
@@ -171,6 +176,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
           ref={(input) => {this.taskMinutesInput = input; }}
           defaultValue={minutes}
           placeholder={minutes}
+          onFocus={this.handleFocus}
         />
       </div>
     );
@@ -185,6 +191,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
             type="text"
             ref={(input) => {this.taskInput = input; }}
             placeholder="Enter your task here..."
+            onFocus={this.handleFocus}
           />
           {this.showTime()}
         </div>
@@ -198,6 +205,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
             type="text"
             ref={(input) => {this.taskInput = input; }}
             defaultValue={this.props.task.value}
+            onFocus={this.handleFocus}
           />
           {this.showTime()}
         </div>

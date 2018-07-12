@@ -33,6 +33,7 @@ class FindComponent extends React.Component<IConnectedDispatch> {
         <input
           type="text"
           onChange={this.handleChange}
+          onFocus={this.handleFocus}
           placeholder="Search task..."
           className="searchtask__input"
         />
@@ -41,7 +42,11 @@ class FindComponent extends React.Component<IConnectedDispatch> {
   }
 
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>  {
-    this.props.findTask(event.target.value)
+    this.props.findTask(event.target.value);
+  }
+
+  private handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.select();
   }
 }
 

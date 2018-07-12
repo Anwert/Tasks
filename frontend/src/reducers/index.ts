@@ -74,6 +74,18 @@ function tasks(state: ITask[] = initialState, action: Action): ITask[] {
         },
         ...state.slice(indexForComplete + 1),
       ];
+    case "UNDO_COMPLETE_TASK":
+      const indexForUndoComplete = findByID(state, action.id);
+      return [
+        ...state.slice(0, indexForUndoComplete),
+        {
+          id: state[indexForUndoComplete].id,
+          value: state[indexForUndoComplete].value,
+          date: state[indexForUndoComplete].date,
+          completed: false,
+        },
+        ...state.slice(indexForUndoComplete + 1),
+      ];
     case "EDIT_TASK":
       const indexForEdit = findByID(state, action.task.id);
       return [
