@@ -59,14 +59,12 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
   }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
-    if (nextProps.date !== this.state.date) {
+    if (this.props.date && nextProps.date !== this.state.date) {
       this.setState({ date: nextProps.date });
     }
   }
 
   public render() {
-    console.log('state', this.state)
-    console.log('props', this.props)
     return (
         <ReactModal
           isOpen={this.props.isOpen}
@@ -154,6 +152,7 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
   }
 
   private showTime = () => {
+    console.log('state:', this.state.date.getMinutes())
     let minutes = this.state.date.getMinutes().toString();
     if (this.state.date.getMinutes() < 10) {
       minutes = `0${minutes}`;
