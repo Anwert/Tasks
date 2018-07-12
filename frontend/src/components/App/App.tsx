@@ -49,7 +49,10 @@ class AppComponent extends React.PureComponent<IConnectedStore, IOwnState> {
           {this.showTasks()}
         </ul>
         <button onClick={this.openModal} className="add__button add__button__calendar">+</button>
-        <ModalAddOrEditTask isOpen={this.state.modalIsOpened} onRequestClose={this.closeModal} date={this.state.date}/>
+        <ModalAddOrEditTask
+          isOpen={this.state.modalIsOpened}
+          onRequestClose={this.closeModal}
+          date={this.state.date}/>
       </div>
     );
   }

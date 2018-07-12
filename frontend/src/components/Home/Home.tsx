@@ -23,7 +23,7 @@ const mapStateToProps = (state: IStoreAll): IConnectedState => ({
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<actions.Action>) => ({});
 
-class HomeComponent extends React.Component<IConnectedState, IOwnState> {
+class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
 
   constructor(props: IConnectedState) {
     super(props);

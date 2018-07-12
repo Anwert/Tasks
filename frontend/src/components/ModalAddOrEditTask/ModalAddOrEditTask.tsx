@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnected
 
 ReactModal.setAppElement("#index");
 
-class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & IOwnProps, IOwnState> {
+class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch & IOwnProps, IOwnState> {
 
   private task: ITask;
   private taskInput: HTMLInputElement;
@@ -106,7 +106,7 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
       let emptyInput = false;
       this.setState({dateInputError: false});
       this.setState({emptyInput: false});
-      if (+this.taskHoursInput.value > 59
+      if (+this.taskHoursInput.value > 23
         || +this.taskHoursInput.value < 0
         || +this.taskMinutesInput.value > 59
         || +this.taskMinutesInput.value < 0
@@ -152,7 +152,6 @@ class ModalAddOrEditTaskComponent extends React.Component<IConnectedDispatch & I
   }
 
   private showTime = () => {
-    console.log('state:', this.state.date.getMinutes())
     let minutes = this.state.date.getMinutes().toString();
     if (this.state.date.getMinutes() < 10) {
       minutes = `0${minutes}`;

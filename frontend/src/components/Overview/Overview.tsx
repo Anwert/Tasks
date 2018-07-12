@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnected
   },
 });
 
-class OverviewComponent extends React.Component<IConnectedStore & IConnectedDispatch, IOwnState> {
+class OverviewComponent extends React.PureComponent<IConnectedStore & IConnectedDispatch, IOwnState> {
 
   constructor(props: IConnectedStore & IConnectedDispatch) {
     super(props);
@@ -93,11 +93,24 @@ class OverviewComponent extends React.Component<IConnectedStore & IConnectedDisp
               Overdue {this.showOverdue()}
             </div>
             <button onClick={this.openModal} className="add__button add__button__overview">+</button>
-            <ModalAddOrEditTask isOpen={this.state.modalIsOpened} onRequestClose={this.closeModal}/>
+            <ModalAddOrEditTask
+              isOpen={this.state.modalIsOpened}
+              onRequestClose={this.closeModal}
+              date={this.getDate()}
+            />
           </div>
         </div>
       </div>
     );
+  }
+
+  private getDate = () => {
+    const date = new Date();
+    date.setMonth(this.state.enabledMonth);
+    if (new Date().getUTCMonth() !== this.state.enabledMonth) {
+      date.setDate(1);
+    }
+    return date;
   }
 
   private chooseMonth = (month: number) => {

@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnected
   },
 });
 
-class TaskComponent extends React.Component<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
+class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
 
   constructor(props: IConnectedStore & IConnectedDispatch & IOwnProps) {
     super(props);

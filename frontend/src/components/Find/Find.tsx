@@ -23,21 +23,25 @@ class FindComponent extends React.Component<IConnectedDispatch> {
   public render() {
     return (
       <div className="searchtask">
-        <input type="text" ref={(input) => {this.findTaskInput = input; }} className="searchtask__input"/>
         <img
-          onClick={this.onFindTask}
           src="../../assets/search.png"
           width="30"
           height="30"
           alt="search"
           className="searchtask__btn"
         />
+        <input
+          type="text"
+          onChange={this.handleChange}
+          placeholder="Search task..."
+          className="searchtask__input"
+        />
       </div>
     );
   }
 
-  private onFindTask = () => {
-    this.props.findTask(this.findTaskInput.value);
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>  {
+    this.props.findTask(event.target.value)
   }
 }
 
