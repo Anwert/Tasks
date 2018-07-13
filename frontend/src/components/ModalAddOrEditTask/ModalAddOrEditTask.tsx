@@ -16,7 +16,12 @@ interface IOwnProps {
 interface IOwnState {
   emptyInput: boolean;
   dateInputError: boolean;
+  taskExistsError: boolean;
   date: Date;
+}
+
+interface IConnectedStore {
+  tasks: ITask[];
 }
 
 interface IConnectedDispatch {
@@ -25,7 +30,9 @@ interface IConnectedDispatch {
   editTask: (task: ITask) => void;
 }
 
-const mapStateToProps = (store: IStoreAll): {} => ({});
+const mapStateToProps = (store: IStoreAll) => ({
+  tasks: store.tasks,
+});
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
   addTask: (task: ITask) => {
@@ -41,21 +48,33 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnected
 
 ReactModal.setAppElement("#index");
 
-class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch & IOwnProps, IOwnState> {
+class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
 
   private task: ITask;
   private taskInput: HTMLInputElement;
   private taskHoursInput: HTMLInputElement;
   private taskMinutesInput: HTMLInputElement;
 
-  constructor(props: & IConnectedDispatch & IOwnProps) {
+  constructor(props: IConnectedStore & IConnectedDispatch & IOwnProps) {
     super(props);
 
     this.state = {
       emptyInput: false,
       dateInputError: false,
+      taskExistsError: false,
       date: props.task ? props.task.date : props.date ? props.date : new Date(),
     };
+    this.handleFocus = this.handleFocus.bind(this);
+    this.showInputIsEmpty = this.showInputIsEmpty.bind(this);
+    this.showDateError = this.showDateError.bind(this);
+    this.showTaskExistsError = this.showTaskExistsError.bind(this);
+    this.checkTasks = this.checkTasks.bind(this);
+    this.onAddOrEditTask = this.onAddOrEditTask.bind(this);
+    this.onDeleteTask = this.onDeleteTask.bind(this);
+    this.showTime = this.showTime.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.onClickDay = this.onClickDay.bind(this);
+    this.showButtons = this.showButtons.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
@@ -72,6 +91,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
           className="modal"
           overlayClassName="overlay"
         >
+          {this.showTaskExistsError()}
           {this.showInputIsEmpty()}
           {this.showDateError()}
           <Calendar
@@ -85,11 +105,11 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     );
   }
 
-  private handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleFocus = function(event: React.ChangeEvent<HTMLInputElement>) {
     event.target.select();
   }
 
-  private showInputIsEmpty = () => {
+  private showInputIsEmpty = function() {
     if (this.state.emptyInput) {
       return (
         <div className='error'>Enter your task!</div>
@@ -97,7 +117,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     }
   }
 
-  private showDateError = () => {
+  private showDateError = function() {
     if (this.state.dateInputError) {
       return (
         <div className='error'>Date input error!</div>
@@ -105,11 +125,36 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     }
   }
 
-  private onAddOrEditTask = () => {
+  private showTaskExistsError = function() {
+    if (this.state.taskExistsError) {
+      return (
+        <div className='error'>This task already exists!</div>
+      );
+    }
+  }
+
+  private checkTasks = function() {
+    let ret = false;
+    this.props.tasks.map((task: ITask) => {
+      if (task.value === this.taskInput.value.toString()
+      && this.state.date.getFullYear() === task.date.getFullYear()
+      && this.state.date.getMonth() === task.date.getMonth()
+      && this.state.date.getDate() === task.date.getDate()
+      && +this.taskHoursInput.value === task.date.getHours()
+      && +this.taskMinutesInput.value === task.date.getMinutes()) {
+        ret = true;
+      }
+    })
+    return ret;
+  }
+
+  private onAddOrEditTask = function() {
       let dateInputError = false;
       let emptyInput = false;
+      let taskExistsError = false;
       this.setState({dateInputError: false});
       this.setState({emptyInput: false});
+      this.setState({taskExistsError: false});
       if (+this.taskHoursInput.value > 23
         || +this.taskHoursInput.value < 0
         || +this.taskMinutesInput.value > 59
@@ -124,7 +169,11 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
         this.setState({emptyInput: true});
         emptyInput = true;
       }
-      if (dateInputError === false && emptyInput === false) {
+      if (this.checkTasks()) {
+        this.setState({taskExistsError: true});
+        taskExistsError= true;
+      }
+      if (dateInputError === false && emptyInput === false && taskExistsError === false) {
         this.task = {
           value: this.taskInput.value,
           date: new Date(
@@ -138,6 +187,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
         };
         this.setState({dateInputError: false});
         this.setState({emptyInput: false});
+        this.setState({taskExistsError: false});
         dateInputError = false;
         emptyInput = false;
         this.props.onRequestClose();
@@ -150,12 +200,12 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
       }
     }
 
-  private onDeleteTask = () => {
+  private onDeleteTask = function() {
     this.props.onRequestClose();
     this.props.deleteTask(this.props.task.id);
   }
 
-  private showTime = () => {
+  private showTime = function() {
     let minutes = this.state.date.getMinutes().toString();
     if (this.state.date.getMinutes() < 10) {
       minutes = `0${minutes}`;
@@ -182,7 +232,7 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     );
   }
 
-  private showForm = () => {
+  private showForm = function() {
     if (!this.props.task) {
       return (
         <div>
@@ -213,11 +263,11 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedDispatch
     }
   }
 
-  private onClickDay = (date: Date) => {
+  private onClickDay = function(date: Date) {
     this.setState({date});
   }
 
-  private showButtons = () => {
+  private showButtons = function() {
     if (this.props.task) {
       return (
         <div className="show__buttons__edit">

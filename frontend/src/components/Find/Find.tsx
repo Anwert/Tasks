@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnected
   },
 });
 
-class FindComponent extends React.Component<IConnectedDispatch> {
+class FindComponent extends React.PureComponent<IConnectedDispatch> {
 
   private findTaskInput: HTMLInputElement;
 

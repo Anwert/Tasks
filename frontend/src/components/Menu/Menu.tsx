@@ -11,7 +11,7 @@ export const Menu = () => {
         <i className="fa fa-home fa-fw" aria-hidden="true"/>
         Home
       </Link>
-      <Link to="/app" className="menu__el">
+      <Link to="/calendar" className="menu__el">
         <i className="fa fa-calendar-o" aria-hidden="true"/>
         Calendar
       </Link>

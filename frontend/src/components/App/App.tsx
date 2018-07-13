@@ -33,6 +33,10 @@ class AppComponent extends React.PureComponent<IConnectedStore, IOwnState> {
       date: new Date(),
       modalIsOpened: false,
     };
+    this.onClickDay = this.onClickDay.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.showTasks = this.showTasks.bind(this);
   }
 
   public render() {
@@ -57,20 +61,20 @@ class AppComponent extends React.PureComponent<IConnectedStore, IOwnState> {
     );
   }
 
-  private onClickDay = (date: Date) => {
+  private onClickDay = function(date: Date) {
     this.setState({date});
   }
 
-  private openModal = () => {
+  private openModal = function() {
     this.setState({modalIsOpened: true});
   }
 
-  private closeModal = () => {
+  private closeModal = function() {
     this.setState({modalIsOpened: false});
   }
 
-  private showTasks = () => {
-    return this.props.tasks.map((item) => {
+  private showTasks = function() {
+    return this.props.tasks.map((item: ITask) => {
         if (item.date.getFullYear() === this.state.date.getFullYear()
           && item.date.getUTCMonth() === this.state.date.getUTCMonth()
           && item.date.getDate() === this.state.date.getDate()) {

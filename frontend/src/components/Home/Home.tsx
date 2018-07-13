@@ -31,6 +31,12 @@ class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
       date: new Date(),
       modalIsOpened: false,
     };
+    this.showDay = this.showDay.bind(this);
+    this.showDate = this.showDate.bind(this);
+    this.showTasksForTodayLabel = this.showTasksForTodayLabel.bind(this);
+    this.showTasks = this.showTasks.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   public render() {
@@ -50,7 +56,7 @@ class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
     );
   }
 
-  private showDay = () => {
+  private showDay = function() {
     switch (this.state.date.getUTCDay()) {
       case 0:
         return "Monday";
@@ -69,7 +75,7 @@ class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
     }
   }
 
-  private showDate = () => {
+  private showDate = function() {
     switch (this.state.date.getUTCMonth()) {
       case 0:
         return (`January ${this.state.date.getUTCDate()}, ${this.state.date.getUTCFullYear()}`);
@@ -98,16 +104,16 @@ class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
     }
   }
 
-  private showTasksForTodayLabel = () => {
-    if (this.props.tasks.filter((task) => task.date.getDate() === this.state.date.getDate()).length > 0) {
+  private showTasksForTodayLabel = function() {
+    if (this.props.tasks.filter((task: ITask) => task.date.getDate() === this.state.date.getDate()).length > 0) {
       return (<div>Tasks for today:</div>);
     } else {
       return (<div>No tasks for today</div>);
     }
   }
 
-  private showTasks = () => {
-    return this.props.tasks.map((item) => {
+  private showTasks = function() {
+    return this.props.tasks.map((item: ITask) => {
       if (item.date.getFullYear() === this.state.date.getFullYear()
           && item.date.getUTCMonth() === this.state.date.getUTCMonth()
           && item.date.getDate() === this.state.date.getDate()) {
@@ -120,11 +126,11 @@ class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
     });
   }
 
-  private openModal = () => {
+  private openModal = function() {
     this.setState({modalIsOpened: true});
   }
 
-  private closeModal = () => {
+  private closeModal = function() {
     this.setState({modalIsOpened: false});
   }
 }

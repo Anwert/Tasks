@@ -39,6 +39,12 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
       modalIsOpened: false,
       enabledMonth: new Date().getUTCMonth(),
     };
+    this.getDate = this.getDate.bind(this);
+    this.chooseMonth = this.chooseMonth.bind(this);
+    this.showOverdue = this.showOverdue.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.enabled = this.enabled.bind(this);
   }
 
   public render() {
@@ -104,7 +110,7 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
     );
   }
 
-  private getDate = () => {
+  private getDate = function() {
     const date = new Date();
     date.setMonth(this.state.enabledMonth);
     if (new Date().getUTCMonth() !== this.state.enabledMonth) {
@@ -113,46 +119,46 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
     return date;
   }
 
-  private chooseMonth = (month: number) => {
+  private chooseMonth = function(month: number) {
     this.props.filterTasksByMonth(month);
     this.setState({
         enabledMonth: month,
       });
   }
 
-  private showCompleted = () => {
+  private showCompleted = function() {
     const allTasks = this.props.tasks.length;
-    const completedTasks = this.props.tasks.filter((task) => task.completed === true).length;
+    const completedTasks = this.props.tasks.filter((task: ITask) => task.completed === true).length;
     if (allTasks > 0) {
       return `${(completedTasks * 100 / allTasks).toFixed(1)}%`;
     }
     return `0%`;
   }
 
-  private showOverdue = () => {
+  private showOverdue = function() {
     const allTasks = this.props.tasks.length;
     const overdueTasks = this.props.tasks
-      .filter((task) => task.completed === false)
-      .filter((task) => task.date < new Date()).length;
+      .filter((task: ITask) => task.completed === false)
+      .filter((task: ITask) => task.date < new Date()).length;
     if (allTasks > 0) {
       return `${(overdueTasks * 100 / allTasks).toFixed(1)}%`;
     }
     return `0%`;
   }
 
-  private openModal = () => {
+  private openModal = function() {
     this.setState({
       modalIsOpened: true,
     });
   }
 
-  private closeModal = () => {
+  private closeModal = function() {
     this.setState({
       modalIsOpened: false,
     });
   }
 
-  private enabled = (month: number) => {
+  private enabled = function(month: number) {
     if (month === this.state.enabledMonth) {
       return `month__btn--active`;
     }

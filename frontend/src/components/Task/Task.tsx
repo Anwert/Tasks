@@ -45,28 +45,33 @@ class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDisp
       completed: this.props.task.completed,
       modalIsOpened: false,
     };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.onCompleteTask = this.onCompleteTask.bind(this);
+    this.onUndoCompleteTask = this.onUndoCompleteTask.bind(this);
+    this.showTask = this.showTask.bind(this);
   }
 
   public render() { return this.showTask(); }
 
-  private openModal = () => {
+  private openModal = function() {
     this.setState({
       modalIsOpened: true,
     });
   }
 
-  private closeModal = () => {
+  private closeModal = function() {
      this.setState({modalIsOpened: false});
    }
 
-  private onCompleteTask = () => {
+  private onCompleteTask = function() {
     this.setState({
       completed: true,
     });
     this.props.completeTask(this.props.id);
   }
 
-  onUndoCompleteTask = () => {
+  onUndoCompleteTask = function() {
     this.setState({
       completed: false,
       modalIsOpened: false,
@@ -74,7 +79,7 @@ class TaskComponent extends React.PureComponent<IConnectedStore & IConnectedDisp
     this.props.undoCompleteTask(this.props.id);
   }
 
-  private showTask = () => {
+  private showTask = function() {
     let minutes = this.props.task.date.getMinutes().toString();
     if (this.props.task.date.getMinutes() < 10) {
       minutes = `0${minutes}`;

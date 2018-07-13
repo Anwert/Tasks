@@ -32,6 +32,8 @@ class ListComponent extends React.PureComponent<IConnectedStore, IOwnState> {
       date: new Date(),
       modalIsOpened: false,
     };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   public render() {
@@ -56,11 +58,11 @@ class ListComponent extends React.PureComponent<IConnectedStore, IOwnState> {
       ));
   }
 
-  private openModal = () => {
+  private openModal = function() {
     this.setState({modalIsOpened: true});
   }
 
-  private closeModal = () => {
+  private closeModal = function() {
     this.setState({modalIsOpened: false});
   }
 }
