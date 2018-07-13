@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as redux from "redux";
 import * as action from "../../actions";
-import { IStoreAll, ITask } from "../../reducers";
+import * as redux from "redux";
+import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 
 export interface IOwnProps {
@@ -28,7 +28,7 @@ const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore
   task: store.tasks.find((task) => task.id === ownProps.id),
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
   completeTask: (id: string) => {
     dispatch(action.completeTask(id));
   },

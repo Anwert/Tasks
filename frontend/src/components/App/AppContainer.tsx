@@ -1,13 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import * as action from "../../actions";
 import * as redux from "redux";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { Find } from "../Find/Find";
-import { MenuButton } from "../Menu/MenuButton";
-import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 import { Task } from "../Task/Task";
+import { AppComponent } from "./AppComponent";
 
 interface IOwnState {
   date: Date;
@@ -18,13 +15,13 @@ interface IConnectedStore {
   tasks: ITask[];
 }
 
-const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
+const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>) => ({});
 
-class ListComponent extends React.PureComponent<IConnectedStore, IOwnState> {
+class AppContainer extends React.PureComponent<IConnectedStore, IOwnState> {
 
   constructor(props: IConnectedStore) {
     super(props);
@@ -32,30 +29,27 @@ class ListComponent extends React.PureComponent<IConnectedStore, IOwnState> {
       date: new Date(),
       modalIsOpened: false,
     };
+    this.onClickDay = this.onClickDay.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
   public render() {
     return (
-      <div>
-        <MenuButton />
-        <Find />
-        <ul className="tasks">
-          {this.showTasks()}
-        </ul>
-        <button onClick={this.openModal} className="add__button add__button__list">+</button>
-        <ModalAddOrEditTask isOpen={this.state.modalIsOpened} onRequestClose={this.closeModal}/>
-    </div>
-  );
-}
+      <AppComponent
+        date={this.state.date}
+        modalIsOpened={this.state.modalIsOpened}
+        onClickDay={this.onClickDay}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        tasks={this.props.tasks}
+      />
+    );
+  }
 
-  private showTasks = () => {
-    return this.props.tasks.map((item) => (
-        <li key={item.id}>
-          <Task id={item.id}/>
-        </li>
-      ));
+  private onClickDay = function(date: Date) {
+    console.log('I was invoked!', date)
+    this.setState({date});
   }
 
   private openModal = function() {
@@ -67,5 +61,5 @@ class ListComponent extends React.PureComponent<IConnectedStore, IOwnState> {
   }
 }
 
-export const List: React.ComponentClass =
-  connect(mapStateToProps, mapDispatchToProps)(ListComponent);
+export const App: React.ComponentClass =
+  connect(mapStateToProps, mapDispatchToProps)(AppContainer);

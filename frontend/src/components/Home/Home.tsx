@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import * as action from "../../actions";
 import * as redux from "redux";
-import * as actions from "../../actions";
-import { IStoreAll, ITask } from "../../reducers";
+import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { MenuButton } from "../Menu/MenuButton";
 import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 import { Task } from "../Task/Task";
@@ -21,7 +21,7 @@ const mapStateToProps = (state: IStoreAll): IConnectedState => ({
   tasks: state.tasks,
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<actions.Action>) => ({});
+const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>) => ({});
 
 class HomeComponent extends React.PureComponent<IConnectedState, IOwnState> {
 

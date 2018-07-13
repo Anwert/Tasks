@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as redux from "redux";
 import * as action from "../../actions";
-import { IStoreAll } from "../../reducers";
+import * as redux from "redux";
+import { IAction, IStoreAll } from "../../interfaces";
 
 interface IConnectedDispatch {
   findTask: (value: string) => void;
@@ -10,7 +10,7 @@ interface IConnectedDispatch {
 
 const mapStateToProps = (store: IStoreAll) => ({});
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
   findTask: (value: string) => {
     dispatch(action.findTask(value));
   },

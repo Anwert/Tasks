@@ -3,12 +3,13 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
-import { App } from "./components/App/App";
+import { App } from "./components/App/AppContainer";
 import { Home } from "./components/Home/Home";
 import { List } from "./components/List/List";
 import { Menu } from "./components/Menu/Menu";
 import { Overview } from "./components/Overview/Overview";
-import { IStoreAll, reducers } from "./reducers";
+import { IStoreAll } from "./interfaces"
+import { reducers } from "./reducers";
 
 const store: Redux.Store<IStoreAll> = Redux.createStore(reducers);
 

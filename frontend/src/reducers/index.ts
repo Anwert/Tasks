@@ -1,18 +1,5 @@
 import { combineReducers } from "redux";
-import { Action } from "../actions";
-
-export interface ITask {
-  id?: string;
-  value: string;
-  date: Date;
-  completed: boolean;
-}
-
-export interface IStoreAll {
-  tasks: ITask[];
-  filterTasks: string;
-  filterTasksByMonth: number;
-}
+import { IAction, ITask, IStoreAll } from "../interfaces";
 
 const ID = () => {
   return "_" + Math.random().toString(36).substr(2, 9);
@@ -45,7 +32,7 @@ const findByID = (state: ITask[], id: string) => {
   return index;
 };
 
-function tasks(state: ITask[] = initialState, action: Action): ITask[] {
+function tasks(state: ITask[] = initialState, action: IAction): ITask[] {
   switch (action.type) {
     case "ADD_TASK":
       return [...state,
@@ -102,14 +89,14 @@ function tasks(state: ITask[] = initialState, action: Action): ITask[] {
   return state;
 }
 
-function filterTasks(state: string = "", action: Action): string {
+function filterTasks(state: string = "", action: IAction): string {
   if (action.type === "FIND_TASK") {
     return action.value;
   }
   return state;
 }
 
-function filterTasksByMonth(state: number = new Date().getUTCMonth(), action: Action): number {
+function filterTasksByMonth(state: number = new Date().getUTCMonth(), action: IAction): number {
   if (action.type === "FILTER_TASKS_BY_MONTH") {
     return action.month;
   }

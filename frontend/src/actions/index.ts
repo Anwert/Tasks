@@ -1,45 +1,36 @@
-import { ITask } from "../reducers";
+import { IAction, ITask } from "../interfaces";
 
-export type Action =
-   { type: "ADD_TASK", task: ITask }
-|  { type: "FIND_TASK", value: string }
-|  { type: "COMPLETE_TASK", id: string }
-|  { type: "UNDO_COMPLETE_TASK", id: string }
-|  { type: "FILTER_TASKS_BY_MONTH", month: number }
-|  { type: "DELETE_TASK", id: string }
-|  { type: "EDIT_TASK", task: ITask };
-
-export const addTask = (task: ITask): Action => ({
+export const addTask = (task: ITask): IAction => ({
   type: "ADD_TASK",
   task,
 });
 
-export const deleteTask = (id: string): Action => ({
+export const deleteTask = (id: string): IAction => ({
   type: "DELETE_TASK",
   id,
 });
 
-export const findTask = (value: string): Action => ({
+export const findTask = (value: string): IAction => ({
   type: "FIND_TASK",
   value,
 });
 
-export const completeTask = (id: string): Action => ({
+export const completeTask = (id: string): IAction => ({
   type: "COMPLETE_TASK",
   id,
 });
 
-export const undoCompleteTask = (id: string): Action => ({
+export const undoCompleteTask = (id: string): IAction => ({
   type: "UNDO_COMPLETE_TASK",
   id,
 });
 
-export const filterTasksByMonth = (month: number): Action => ({
+export const filterTasksByMonth = (month: number): IAction => ({
   type: "FILTER_TASKS_BY_MONTH",
   month,
 });
 
-export const editTask = (task: ITask): Action => ({
+export const editTask = (task: ITask): IAction => ({
   type: "EDIT_TASK",
   task,
 });

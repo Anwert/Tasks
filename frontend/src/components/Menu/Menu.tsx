@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import * as redux from "redux";
 
 export const Menu = () => {
-
   return (
     <div className="menu">
       <Link to="/" className="menu__el">

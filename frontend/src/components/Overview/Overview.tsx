@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as redux from "redux";
 import * as action from "../../actions";
-import { IStoreAll, ITask } from "../../reducers";
+import * as redux from "redux";
+import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { Menu } from "../Menu/Menu";
 import { MenuButton } from "../Menu/MenuButton";
 import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
@@ -25,7 +25,7 @@ const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.date.getUTCMonth() === store.filterTasksByMonth),
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
   filterTasksByMonth: (month: number) => {
     dispatch(action.filterTasksByMonth(month));
   },
@@ -40,7 +40,6 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
       enabledMonth: new Date().getUTCMonth(),
     };
     this.getDate = this.getDate.bind(this);
-    this.chooseMonth = this.chooseMonth.bind(this);
     this.showOverdue = this.showOverdue.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);

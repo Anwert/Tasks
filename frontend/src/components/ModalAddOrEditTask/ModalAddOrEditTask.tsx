@@ -2,9 +2,9 @@ import * as React from "react";
 import Calendar from "react-calendar/dist/entry.nostyle";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
-import * as redux from "redux";
 import * as action from "../../actions";
-import { IStoreAll, ITask } from "../../reducers";
+import * as redux from "redux";
+import { IAction, IStoreAll, ITask } from "../../interfaces";
 
 interface IOwnProps {
   task?: ITask;
@@ -34,7 +34,7 @@ const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks,
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<action.Action>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
   addTask: (task: ITask) => {
     dispatch(action.addTask(task));
   },
@@ -134,18 +134,17 @@ class ModalAddOrEditTaskComponent extends React.PureComponent<IConnectedStore & 
   }
 
   private checkTasks = function() {
-    let ret = false;
-    this.props.tasks.map((task: ITask) => {
-      if (task.value === this.taskInput.value.toString()
-      && this.state.date.getFullYear() === task.date.getFullYear()
-      && this.state.date.getMonth() === task.date.getMonth()
-      && this.state.date.getDate() === task.date.getDate()
-      && +this.taskHoursInput.value === task.date.getHours()
-      && +this.taskMinutesInput.value === task.date.getMinutes()) {
-        ret = true;
+    for (let i = 0; i < this.props.tasks.length; i++) {
+      if (this.taskInput.value.toString() === this.props.tasks[i].value
+      && this.state.date.getFullYear() === this.props.tasks[i].date.getFullYear()
+      && this.state.date.getMonth() === this.props.tasks[i].date.getMonth()
+      && this.state.date.getDate() === this.props.tasks[i].date.getDate()
+      && +this.taskHoursInput.value === this.props.tasks[i].date.getHours()
+      && +this.taskMinutesInput.value === this.props.tasks[i].date.getMinutes()) {
+        return true;
       }
-    })
-    return ret;
+    }
+    return false;
   }
 
   private onAddOrEditTask = function() {
