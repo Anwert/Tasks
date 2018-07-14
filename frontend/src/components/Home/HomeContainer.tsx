@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import * as action from "../../actions";
 import * as redux from "redux";
 import { IAction, IStoreAll, ITask } from "../../interfaces";

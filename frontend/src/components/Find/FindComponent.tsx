@@ -1,11 +1,11 @@
 import * as React from "react";
-import{ IOwnProps } from "./FindInterfaces";
+import{ IComponentProps } from "./FindInterfaces";
 
 const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
   event.target.select();
 }
 
-export const FindComponent = (props: IOwnProps) => (
+export const FindComponent = (props: IComponentProps) => (
   <div className="searchtask">
     <img
       src="../../assets/search.png"

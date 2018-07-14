@@ -1,6 +1,6 @@
 import { ITask } from "../../interfaces"
 
-export interface IOwnProps {
+export interface IComponentProps {
   date: Date;
   modalIsOpened: boolean;
   tasks: ITask[];

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface IOwnProps {
+export interface IComponentProps {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

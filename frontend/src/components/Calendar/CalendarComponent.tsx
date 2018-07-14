@@ -2,12 +2,12 @@ import * as React from "react";
 import { MenuButton } from "../Menu/MenuButton";
 import { Find } from "../Find/FindContainer";
 import Calendar from "react-calendar/dist/entry.nostyle";
-import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
-import { Task } from "../Task/Task";
+import { Modal } from "../Modal/ModalContainer";
+import { Task } from "../Task/TaskContainer";
 import { ITask } from "../../interfaces";
-import { IOwnProps } from "./CalendarInterfaces";
+import { IComponentProps } from "./CalendarInterfaces";
 
-export const CalendarComponent = (props: IOwnProps) => (
+export const CalendarComponent = (props: IComponentProps) => (
   <div className="App">
     <MenuButton />
     <Find />
@@ -30,7 +30,7 @@ export const CalendarComponent = (props: IOwnProps) => (
       })}
     </ul>
     <button onClick={props.openModal} className="add__button add__button__calendar">+</button>
-    <ModalAddOrEditTask
+    <Modal
       isOpen={props.modalIsOpened}
       onRequestClose={props.closeModal}
       date={props.date}

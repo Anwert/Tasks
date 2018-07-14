@@ -23,13 +23,12 @@ const initialState: ITask[] = [{
 }];
 
 const findByID = (state: ITask[], id: string) => {
-  let index = 0;
-  state.map((el) => {
-    if (el.id === id) {
-      index = state.indexOf(el);
+  for (let i = 0; i < state.length; i++) {
+    if (state[i].id === id) {
+      return i;
     }
-  });
-  return index;
+  };
+  return -1;
 };
 
 function tasks(state: ITask[] = initialState, action: IAction): ITask[] {

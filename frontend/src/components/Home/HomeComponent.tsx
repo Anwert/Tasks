@@ -1,8 +1,8 @@
 import * as React from "react";
-import{ IOwnProps } from "./HomeInterfaces";
+import{ IComponentProps } from "./HomeInterfaces";
 import { MenuButton } from "../Menu/MenuButton";
-import { Task } from "../Task/Task";
-import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
+import { Task } from "../Task/TaskContainer";
+import { Modal } from "../Modal/ModalContainer";
 import { ITask } from "../../interfaces";
 
 const renderDay = (day: number) => {
@@ -61,32 +61,30 @@ const renderTasksForTodayLabel = (tasks: ITask[]) => {
   }
 }
 
-export const HomeComponent = (props: IOwnProps) => {
-  return (
-    <div>
-      <MenuButton />
-      <div className="hello">Hello!</div>
-      <div className="show__day">
-        {renderDay(props.date.getUTCDay())}
-      </div>
-      <div className="show__date">
-        {renderDate(props.date)}
-      </div>
-      <div>
-        {renderTasksForTodayLabel(props.tasks)}
-      </div>
-      <ul className="tasks">
-        {props.tasks.map((task) => {
-            return (
-              <li key={task.id}>
-                <Task id={task.id}/>
-              </li>
-            );
-          }
-        )}
-      </ul>
-      <button onClick={props.openModal} className="add__button add__button__home">+</button>
-      <ModalAddOrEditTask isOpen={props.modalIsOpened} onRequestClose={props.closeModal}/>
+export const HomeComponent = (props: IComponentProps) => (
+  <div>
+    <MenuButton />
+    <div className="hello">Hello!</div>
+    <div className="show__day">
+      {renderDay(props.date.getUTCDay())}
     </div>
-  );
-};
+    <div className="show__date">
+      {renderDate(props.date)}
+    </div>
+    <div>
+      {renderTasksForTodayLabel(props.tasks)}
+    </div>
+    <ul className="tasks">
+      {props.tasks.map((task) => {
+          return (
+            <li key={task.id}>
+              <Task id={task.id}/>
+            </li>
+          );
+        }
+      )}
+    </ul>
+    <button onClick={props.openModal} className="add__button add__button__home">+</button>
+    <Modal isOpen={props.modalIsOpened} onRequestClose={props.closeModal}/>
+  </div>
+);
