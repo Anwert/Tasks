@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import * as action from "../../actions";
 import * as redux from "redux";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { Find } from "../Find/Find";
+import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";
 import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 import { Task } from "../Task/Task";

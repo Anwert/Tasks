@@ -4,7 +4,6 @@ export interface IOwnProps {
   date: Date;
   modalIsOpened: boolean;
   tasks: ITask[];
-  onClickDay: (date: Date) => void;
   openModal: () => void;
   closeModal: () => void;
 }
@@ -14,6 +13,6 @@ export interface IOwnState {
   modalIsOpened: boolean;
 }
 
-export interface IConnectedStore {
+export interface IConnectedState {
   tasks: ITask[];
 }

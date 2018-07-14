@@ -1,19 +1,11 @@
 import * as React from "react";
 import { MenuButton } from "../Menu/MenuButton";
-import { Find } from "../Find/Find";
+import { Find } from "../Find/FindContainer";
 import Calendar from "react-calendar/dist/entry.nostyle";
 import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 import { Task } from "../Task/Task";
 import { ITask } from "../../interfaces";
-
-export interface IOwnProps {
-  date: Date;
-  modalIsOpened: boolean;
-  tasks: ITask[];
-  onClickDay: (date: Date) => void;
-  openModal: () => void;
-  closeModal: () => void;
-}
+import { IOwnProps } from "./CalendarInterfaces";
 
 export const CalendarComponent = (props: IOwnProps) => (
   <div className="App">

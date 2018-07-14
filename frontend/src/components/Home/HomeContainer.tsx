@@ -1,46 +1,48 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import * as action from "../../actions";
 import * as redux from "redux";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { Task } from "../Task/Task";
-import { CalendarComponent } from "./CalendarComponent";
-import { IOwnState, IConnectedStore } from "./CalendarInterfaces";
+import { HomeComponent } from "./HomeComponent";
+import { IOwnState, IConnectedState } from "./HomeInterfaces"
 
-const mapStateToProps = (store: IStoreAll) => ({
-  tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
+const mapStateToProps = (store: IStoreAll): IConnectedState => ({
+  tasks: store.tasks.filter((task) => {
+    const date = new Date();
+    if (task.date.getFullYear() === date.getFullYear()
+    && task.date.getUTCMonth() === date.getUTCMonth()
+    && task.date.getDate() === date.getDate()) {
+      return true;
+    }
+    return false;
+  }),
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>) => ({});
 
-class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> {
+class HomeContainer extends React.PureComponent<IConnectedState, IOwnState> {
 
-  constructor(props: IConnectedStore) {
+  constructor(props: IConnectedState) {
     super(props);
     this.state = {
       date: new Date(),
       modalIsOpened: false,
     };
-    this.onClickDay = this.onClickDay.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
   public render() {
     return (
-      <CalendarComponent
+      <HomeComponent
         date={this.state.date}
         modalIsOpened={this.state.modalIsOpened}
-        onClickDay={this.onClickDay}
+        tasks={this.props.tasks}
         openModal={this.openModal}
         closeModal={this.closeModal}
-        tasks={this.props.tasks}
       />
     );
-  }
-
-  private onClickDay = function(date: Date) {
-    this.setState({date});
   }
 
   private openModal = function() {
@@ -52,5 +54,5 @@ class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> 
   }
 }
 
-export const Calendar: React.ComponentClass =
-  connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);
+export const Home: React.ComponentClass =
+  connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
