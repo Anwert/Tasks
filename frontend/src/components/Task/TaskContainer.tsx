@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { IOwnProps, IConnectedStore, IConnectedDispatch, IOwnState } from "./TaskInterfaces"
-import { TaskComponent } from "./TaskComponent"
+import { TaskComponent } from "./TaskComponent";
+import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./TaskInterfaces";
 
 const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore => ({
   task: store.tasks.find((task) => task.id === ownProps.id),
@@ -51,18 +51,18 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
     this.setState({
       modalIsOpened: true,
     });
-  }
+  };
 
   private closeModal = function() {
      this.setState({modalIsOpened: false});
-   }
+   };
 
   private onCompleteTask = function() {
     this.setState({
       completed: true,
     });
     this.props.completeTask(this.props.id);
-  }
+  };
 
   private onUndoCompleteTask = function() {
     this.setState({
@@ -70,7 +70,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
       modalIsOpened: false,
     });
     this.props.undoCompleteTask(this.props.id);
-  }
+  };
 }
 
 export const Task: React.ComponentClass<IOwnProps> =

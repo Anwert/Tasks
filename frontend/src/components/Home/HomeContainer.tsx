@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { HomeComponent } from "./HomeComponent";
-import { IOwnState, IConnectedState } from "./HomeInterfaces"
+import { IConnectedState, IOwnState } from "./HomeInterfaces";
 
 const mapStateToProps = (store: IStoreAll): IConnectedState => ({
   tasks: store.tasks.filter((task) => {
@@ -46,11 +46,11 @@ class HomeContainer extends React.PureComponent<IConnectedState, IOwnState> {
 
   private openModal = function() {
     this.setState({modalIsOpened: true});
-  }
+  };
 
   private closeModal = function() {
     this.setState({modalIsOpened: false});
-  }
+  };
 }
 
 export const Home: React.ComponentClass =

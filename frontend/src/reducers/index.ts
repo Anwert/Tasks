@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { IAction, ITask, IStoreAll } from "../interfaces";
+import { IAction, IStoreAll, ITask } from "../interfaces";
 
 const ID = () => {
   return "_" + Math.random().toString(36).substr(2, 9);
@@ -27,7 +27,7 @@ const findByID = (state: ITask[], id: string) => {
     if (state[i].id === id) {
       return i;
     }
-  };
+  }
   return -1;
 };
 

@@ -1,4 +1,4 @@
-import { ITask } from "../../interfaces"
+import { ITask } from "../../interfaces";
 
 export interface IComponentProps {
   date: Date;

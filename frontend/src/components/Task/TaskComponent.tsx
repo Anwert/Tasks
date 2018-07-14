@@ -1,13 +1,16 @@
 import * as React from "react";
-import{ IComponentProps } from "./TaskInterfaces";
+import { ITask } from "../../interfaces";
 import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
-import { ITask } from "../../interfaces";
+import { IComponentProps } from "./TaskInterfaces";
 
 export const TaskComponent = (props: IComponentProps) => {
 
   const renderTask = () => {
-    const minutes = props.task.date.getMinutes() < 10 ? `0${props.task.date.getMinutes().toString()}` : props.task.date.getMinutes().toString();
+    const minutes =
+      props.task.date.getMinutes() < 10 ?
+      `0${props.task.date.getMinutes().toString()}`
+      : props.task.date.getMinutes().toString();
     if (!props.completed) {
       return (
         <div>
@@ -44,7 +47,7 @@ export const TaskComponent = (props: IComponentProps) => {
         </div>
       );
     }
-  }
+  };
 
   return (
     <div>

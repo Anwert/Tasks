@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll } from "../../interfaces";
 import { FindComponent } from "./FindComponent";
 import { IConnectedDispatch } from "./FindInterfaces";

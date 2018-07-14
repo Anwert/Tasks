@@ -1,11 +1,11 @@
 import * as React from "react";
-import{ IComponentProps } from "./ModalInterfaces";
+import Calendar from "react-calendar/dist/entry.nostyle";
+import * as ReactModal from "react-modal";
+import { ITask } from "../../interfaces";
+import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
-import { Find } from "../Find/FindContainer"
-import { ITask } from "../../interfaces";
-import * as ReactModal from "react-modal";
-import Calendar from "react-calendar/dist/entry.nostyle";
+import { IComponentProps } from "./ModalInterfaces";
 
 ReactModal.setAppElement("#index");
 
@@ -15,31 +15,31 @@ let minutesInput: HTMLInputElement;
 
 const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
   event.target.select();
-}
+};
 
 const renderTaskIsEmptyError = (emptyTask: boolean) => {
   if (emptyTask) {
     return (
-      <div className='error'>Enter your task!</div>
+      <div className="error">Enter your task!</div>
     );
   }
-}
+};
 
 const renderDateError = (dateError: boolean) => {
   if (dateError) {
     return (
-      <div className='error'>Date input error!</div>
+      <div className="error">Date input error!</div>
     );
   }
-}
+};
 
 const renderTaskExistsError = (taskExists: boolean) => {
   if (taskExists) {
     return (
-      <div className='error'>This task already exists!</div>
+      <div className="error">This task already exists!</div>
     );
   }
-}
+};
 
 const renderTime = (date: Date) => {
   const minutes = date.getMinutes() < 10 ? `0${date.getMinutes().toString()}` : date.getMinutes().toString();
@@ -63,7 +63,7 @@ const renderTime = (date: Date) => {
       />
     </div>
   );
-}
+};
 
 const renderForm = (task: ITask) => {
   if (!task) {
@@ -88,12 +88,12 @@ const renderForm = (task: ITask) => {
       />
     );
   }
-}
+};
 
 export const ModalComponent = (props: IComponentProps) => {
   const onAddOrEditTask = () => {
-    props.onAddOrEditTask(hoursInput.value, minutesInput.value, taskInput.value)
-  }
+    props.onAddOrEditTask(hoursInput.value, minutesInput.value, taskInput.value);
+  };
 
   const renderButtons = () => {
     if (props.task) {
@@ -112,7 +112,7 @@ export const ModalComponent = (props: IComponentProps) => {
         </div>
       );
     }
-  }
+  };
 
   return (
     <ReactModal

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { IOwnState, IConnectedStore } from "./ListInterfaces";
-import { ListComponent } from "./ListComponent"
+import { ListComponent } from "./ListComponent";
+import { IConnectedStore, IOwnState } from "./ListInterfaces";
 
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
@@ -36,11 +36,11 @@ class ListContainer extends React.PureComponent<IConnectedStore, IOwnState> {
 
   private openModal = function() {
     this.setState({modalIsOpened: true});
-  }
+  };
 
   private closeModal = function() {
     this.setState({modalIsOpened: false});
-  }
+  };
 }
 
 export const List: React.ComponentClass =

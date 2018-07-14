@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { CalendarComponent } from "./CalendarComponent";
-import { IOwnState, IConnectedStore } from "./CalendarInterfaces";
+import { IConnectedStore, IOwnState } from "./CalendarInterfaces";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
@@ -40,15 +40,15 @@ class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> 
 
   private onClickDay = function(date: Date) {
     this.setState({date});
-  }
+  };
 
   private openModal = function() {
     this.setState({modalIsOpened: true});
-  }
+  };
 
   private closeModal = function() {
     this.setState({modalIsOpened: false});
-  }
+  };
 }
 
 export const Calendar: React.ComponentClass =

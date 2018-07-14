@@ -1,4 +1,4 @@
-import { ITask } from "../../interfaces"
+import { ITask } from "../../interfaces";
 
 export interface IComponentProps {
   onAddOrEditTask: (hoursInput: string, minutesInput: string, taskInput: string) => void;

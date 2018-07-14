@@ -1,10 +1,10 @@
 import * as React from "react";
-import{ IComponentProps } from "./OverviewInterfaces";
+import { ITask } from "../../interfaces";
+import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
-import { Find } from "../Find/FindContainer"
-import { ITask } from "../../interfaces"
-import { MonthButton } from "./MonthButton"
+import { MonthButton } from "./MonthButton";
+import { IComponentProps } from "./OverviewInterfaces";
 
 const renderCompleted = (tasks: ITask[]) => {
   const allTasks = tasks.length;
@@ -13,7 +13,7 @@ const renderCompleted = (tasks: ITask[]) => {
     return `${(completedTasks * 100 / allTasks).toFixed(1)}%`;
   }
   return `0%`;
-}
+};
 
 const renderOverdue = (tasks: ITask[]) => {
   const allTasks = tasks.length;
@@ -24,7 +24,7 @@ const renderOverdue = (tasks: ITask[]) => {
     return `${(overdueTasks * 100 / allTasks).toFixed(1)}%`;
   }
   return `0%`;
-}
+};
 
 export const OverviewComponent = (props: IComponentProps) => (
   <div>

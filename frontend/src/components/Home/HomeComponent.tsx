@@ -1,9 +1,9 @@
 import * as React from "react";
-import{ IComponentProps } from "./HomeInterfaces";
-import { MenuButton } from "../Menu/MenuButton";
-import { Task } from "../Task/TaskContainer";
-import { Modal } from "../Modal/ModalContainer";
 import { ITask } from "../../interfaces";
+import { MenuButton } from "../Menu/MenuButton";
+import { Modal } from "../Modal/ModalContainer";
+import { Task } from "../Task/TaskContainer";
+import { IComponentProps } from "./HomeInterfaces";
 
 const renderDay = (day: number) => {
   switch (day) {
@@ -22,7 +22,7 @@ const renderDay = (day: number) => {
     case 6:
       return "Sunday";
   }
-}
+};
 
 const renderDate = (date: Date) => {
   switch (date.getUTCMonth()) {
@@ -51,7 +51,7 @@ const renderDate = (date: Date) => {
     case 11:
       return (`December ${date.getUTCDate()}, ${date.getUTCFullYear()}`);
   }
-}
+};
 
 const renderTasksForTodayLabel = (tasks: ITask[]) => {
   if (tasks.length > 0) {
@@ -59,7 +59,7 @@ const renderTasksForTodayLabel = (tasks: ITask[]) => {
   } else {
     return ("No tasks for today");
   }
-}
+};
 
 export const HomeComponent = (props: IComponentProps) => (
   <div>
@@ -81,7 +81,7 @@ export const HomeComponent = (props: IComponentProps) => (
               <Task id={task.id}/>
             </li>
           );
-        }
+        },
       )}
     </ul>
     <button onClick={props.openModal} className="add__button add__button__home">+</button>

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
-import { IOwnProps, IOwnState, IConnectedStore, IConnectedDispatch } from "./ModalInterfaces"
-import { ModalComponent } from "./ModalComponent"
+import { ModalComponent } from "./ModalComponent";
+import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./ModalInterfaces";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks,
@@ -63,18 +63,18 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
   }
 
   private checkTasks = function(hoursInput: string, minutesInput: string, taskInput: string) {
-    for (let i = 0; i < this.props.tasks.length; i++) {
-      if (taskInput.toString() === this.props.tasks[i].value
-      && this.state.date.getFullYear() === this.props.tasks[i].date.getFullYear()
-      && this.state.date.getMonth() === this.props.tasks[i].date.getMonth()
-      && this.state.date.getDate() === this.props.tasks[i].date.getDate()
-      && +hoursInput === this.props.tasks[i].date.getHours()
-      && +minutesInput === this.props.tasks[i].date.getMinutes()) {
+    for (const task of this.props.tasks) {
+      if (taskInput.toString() === task.value
+      && this.state.date.getFullYear() === task.date.getFullYear()
+      && this.state.date.getMonth() === task.date.getMonth()
+      && this.state.date.getDate() === task.date.getDate()
+      && +hoursInput === task.date.getHours()
+      && +minutesInput === task.date.getMinutes()) {
         return true;
       }
     }
     return false;
-  }
+  };
 
   private onAddOrEditTask = function(hoursInput: string, minutesInput: string, taskInput: string) {
       let dateError = false;
@@ -99,7 +99,7 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
       }
       if (this.checkTasks(hoursInput, minutesInput, taskInput)) {
         this.setState({taskExists: true});
-        taskExists= true;
+        taskExists = true;
       }
       if (dateError === false && emptyTask === false && taskExists === false) {
         this.task = {
@@ -126,16 +126,16 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
           this.props.addTask(this.task);
         }
       }
-    }
+    };
 
   private onDeleteTask = function() {
     this.props.onRequestClose();
     this.props.deleteTask(this.props.task.id);
-  }
+  };
 
   private onClickDay = function(date: Date) {
     this.setState({date});
-  }
+  };
 }
 
 export const Modal: React.ComponentClass<IOwnProps> =

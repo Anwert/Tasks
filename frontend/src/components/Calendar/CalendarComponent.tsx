@@ -1,10 +1,10 @@
 import * as React from "react";
-import { MenuButton } from "../Menu/MenuButton";
-import { Find } from "../Find/FindContainer";
 import Calendar from "react-calendar/dist/entry.nostyle";
+import { ITask } from "../../interfaces";
+import { Find } from "../Find/FindContainer";
+import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
 import { Task } from "../Task/TaskContainer";
-import { ITask } from "../../interfaces";
 import { IComponentProps } from "./CalendarInterfaces";
 
 export const CalendarComponent = (props: IComponentProps) => (

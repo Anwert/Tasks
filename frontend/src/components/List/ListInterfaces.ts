@@ -1,7 +1,7 @@
-import { ITask } from "../../interfaces"
+import { ITask } from "../../interfaces";
 
 export interface IComponentProps {
-  tasks: ITask[]
+  tasks: ITask[];
   modalIsOpened: boolean;
   openModal: () => void;
   closeModal: () => void;

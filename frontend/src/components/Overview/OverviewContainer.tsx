@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as action from "../../actions";
 import * as redux from "redux";
+import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { OverviewComponent } from "./OverviewComponent";
-import { IOwnState, IConnectedStore, IConnectedDispatch } from "./OverviewInterfaces";
+import { IConnectedDispatch, IConnectedStore, IOwnState } from "./OverviewInterfaces";
 
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.date.getUTCMonth() === store.filterTasksByMonth),
@@ -53,30 +53,30 @@ class OverviewContainer extends React.PureComponent<IConnectedStore & IConnected
       date.setUTCDate(1);
     }
     return date;
-  }
+  };
 
   private chooseMonth = function(month: number) {
     this.props.filterTasksByMonth(month);
-  }
+  };
 
   private openModal = function() {
     this.setState({
       modalIsOpened: true,
     });
-  }
+  };
 
   private closeModal = function() {
     this.setState({
       modalIsOpened: false,
     });
-  }
+  };
 
   private enabled = function(month: number) {
     if (month === this.props.enabledMonth) {
       return `month__btn--active`;
     }
     return ``;
-  }
+  };
 }
 
 export const Overview: React.ComponentClass =

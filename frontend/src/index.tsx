@@ -8,7 +8,7 @@ import { Home } from "./components/Home/HomeContainer";
 import { List } from "./components/List/ListContainer";
 import { Menu } from "./components/Menu/Menu";
 import { Overview } from "./components/Overview/OverviewContainer";
-import { IStoreAll } from "./interfaces"
+import { IStoreAll } from "./interfaces";
 import { reducers } from "./reducers";
 
 const store: Redux.Store<IStoreAll> = Redux.createStore(reducers);
