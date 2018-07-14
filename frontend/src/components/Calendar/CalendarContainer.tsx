@@ -4,16 +4,8 @@ import * as action from "../../actions";
 import * as redux from "redux";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { Task } from "../Task/Task";
-import { AppComponent } from "./AppComponent";
-
-interface IOwnState {
-  date: Date;
-  modalIsOpened: boolean;
-}
-
-interface IConnectedStore {
-  tasks: ITask[];
-}
+import { CalendarComponent } from "./CalendarComponent";
+import { IOwnState, IConnectedStore } from "./calendarInterfaces";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
@@ -21,7 +13,7 @@ const mapStateToProps = (store: IStoreAll) => ({
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>) => ({});
 
-class AppContainer extends React.PureComponent<IConnectedStore, IOwnState> {
+class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> {
 
   constructor(props: IConnectedStore) {
     super(props);
@@ -36,7 +28,7 @@ class AppContainer extends React.PureComponent<IConnectedStore, IOwnState> {
 
   public render() {
     return (
-      <AppComponent
+      <CalendarComponent
         date={this.state.date}
         modalIsOpened={this.state.modalIsOpened}
         onClickDay={this.onClickDay}
@@ -48,7 +40,6 @@ class AppContainer extends React.PureComponent<IConnectedStore, IOwnState> {
   }
 
   private onClickDay = function(date: Date) {
-    console.log('I was invoked!', date)
     this.setState({date});
   }
 
@@ -61,5 +52,5 @@ class AppContainer extends React.PureComponent<IConnectedStore, IOwnState> {
   }
 }
 
-export const App: React.ComponentClass =
-  connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export const Calendar: React.ComponentClass =
+  connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);

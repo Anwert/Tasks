@@ -15,7 +15,7 @@ export interface IOwnProps {
   closeModal: () => void;
 }
 
-export const AppComponent = (props: IOwnProps) => (
+export const CalendarComponent = (props: IOwnProps) => (
   <div className="App">
     <MenuButton />
     <Find />

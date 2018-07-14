@@ -10,11 +10,11 @@ import { ModalAddOrEditTask } from "../ModalAddOrEditTask/ModalAddOrEditTask";
 
 interface IOwnState {
     modalIsOpened: boolean;
-    enabledMonth: number;
 }
 
 interface IConnectedStore {
   tasks: ITask[];
+  enabledMonth: number;
 }
 
 interface IConnectedDispatch {
@@ -23,6 +23,7 @@ interface IConnectedDispatch {
 
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.date.getUTCMonth() === store.filterTasksByMonth),
+  enabledMonth: store.filterTasksByMonth,
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
@@ -37,7 +38,6 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
     super(props);
     this.state = {
       modalIsOpened: false,
-      enabledMonth: new Date().getUTCMonth(),
     };
     this.getDate = this.getDate.bind(this);
     this.showOverdue = this.showOverdue.bind(this);
@@ -111,18 +111,15 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
 
   private getDate = function() {
     const date = new Date();
-    date.setMonth(this.state.enabledMonth);
-    if (new Date().getUTCMonth() !== this.state.enabledMonth) {
-      date.setDate(1);
+    date.setUTCMonth(this.props.enabledMonth);
+    if (new Date().getUTCMonth() !== this.props.enabledMonth) {
+      date.setUTCDate(1);
     }
     return date;
   }
 
   private chooseMonth = function(month: number) {
     this.props.filterTasksByMonth(month);
-    this.setState({
-        enabledMonth: month,
-      });
   }
 
   private showCompleted = function() {
@@ -158,7 +155,7 @@ class OverviewComponent extends React.PureComponent<IConnectedStore & IConnected
   }
 
   private enabled = function(month: number) {
-    if (month === this.state.enabledMonth) {
+    if (month === this.props.enabledMonth) {
       return `month__btn--active`;
     }
     return ``;
