@@ -61,30 +61,34 @@ const renderTasksForTodayLabel = (tasks: ITask[]) => {
   }
 };
 
-export const HomeComponent = (props: IComponentProps) => (
-  <div>
-    <MenuButton />
-    <div className="hello">Hello!</div>
-    <div className="show__day">
-      {renderDay(props.date.getUTCDay())}
-    </div>
-    <div className="show__date">
-      {renderDate(props.date)}
-    </div>
+export const HomeComponent = (props: IComponentProps) => {
+
+  const renderTasks = props.tasks.map((task) => {
+    return (
+      <li key={task.id}>
+        <Task id={task.id}/>
+      </li>
+    );
+  });
+
+  return (
     <div>
-      {renderTasksForTodayLabel(props.tasks)}
+      <MenuButton />
+      <div className="hello">Hello!</div>
+      <div className="show__day">
+        {renderDay(props.date.getUTCDay())}
+      </div>
+      <div className="show__date">
+        {renderDate(props.date)}
+      </div>
+      <div>
+        {renderTasksForTodayLabel(props.tasks)}
+      </div>
+      <ul className="tasks">
+        {renderTasks}
+      </ul>
+      <button onClick={props.openModal} className="add__button add__button__home">+</button>
+      <Modal isOpen={props.modalIsOpened} onRequestClose={props.closeModal}/>
     </div>
-    <ul className="tasks">
-      {props.tasks.map((task) => {
-          return (
-            <li key={task.id}>
-              <Task id={task.id}/>
-            </li>
-          );
-        },
-      )}
-    </ul>
-    <button onClick={props.openModal} className="add__button add__button__home">+</button>
-    <Modal isOpen={props.modalIsOpened} onRequestClose={props.closeModal}/>
-  </div>
-);
+  );
+};
