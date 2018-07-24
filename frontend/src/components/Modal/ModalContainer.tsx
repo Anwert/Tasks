@@ -14,8 +14,8 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispat
   addTask: (task: ITask) => {
     dispatch(action.addTask(task));
   },
-  deleteTask: (id: string) => {
-    dispatch(action.deleteTask(id));
+  deleteTask: (_id: string) => {
+    dispatch(action.deleteTask(_id));
   },
   editTask: (task: ITask) => {
     dispatch(action.editTask(task));
@@ -120,7 +120,7 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
         emptyTask = false;
         this.props.onRequestClose();
         if (this.props.task) {
-          this.task = {id: this.props.task.id, ...this.task};
+          this.task = {_id: this.props.task._id, ...this.task};
           this.props.editTask(this.task);
         } else {
           this.props.addTask(this.task);
@@ -130,7 +130,7 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
 
   private onDeleteTask = function() {
     this.props.onRequestClose();
-    this.props.deleteTask(this.props.task.id);
+    this.props.deleteTask(this.props.task._id);
   };
 
   private onClickDay = function(date: Date) {

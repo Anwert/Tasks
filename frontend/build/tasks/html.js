@@ -1,5 +1,4 @@
 const gulp = require('gulp')
-const pug = require('gulp-pug')
 const combine = require('stream-combiner2').obj
 const notify = require('gulp-notify')
 const revReplace = require('gulp-rev-replace')
@@ -11,17 +10,13 @@ const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'develop
 module.exports = function () {
   return function () {
     return combine(
-      gulp.src('frontend/views/*.pug')
-        .pipe(pug({
-          doctype: 'html',
-          pretty: isDevelopment
-        }))
+      gulp.src('../../frontend/index.html')
         .pipe(gulpIf(!isDevelopment, combine(rev(), revReplace({
-          manifest: gulp.src('manifest/css.json', {allowEmpty: true})
-            .pipe(gulp.src('manifest/webpack.json', {allowEmpty: true}))
+          manifest: gulp.src('../../manifest/css.json', {allowEmpty: true})
+            .pipe(gulp.src('../../manifest/webpack.json', {allowEmpty: true}))
         }))))
-        .pipe(gulp.dest('public'))
-        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('html.json'), gulp.dest('manifest'))))
+        .pipe(gulp.dest('../../public'))
+        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('html.json'), gulp.dest('../../manifest'))))
     ).on('error', notify.onError()
     )
   }

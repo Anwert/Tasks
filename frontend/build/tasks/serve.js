@@ -6,10 +6,10 @@ module.exports = function () {
   return function () {
     browserSync.init({
       server: {
-        baseDir: '../public',
+        baseDir: '../../public',
         index: 'index.html'
       }
     })
-    browserSync.watch('../public/**/*.*').on('change', browserSync.reload)
+    browserSync.watch('../../public/**/*.*').on('change', browserSync.reload)
   }
 }

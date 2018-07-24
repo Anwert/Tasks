@@ -11,7 +11,7 @@ export interface IComponentProps {
 }
 
 export interface IOwnProps {
-  id: string;
+  _id: string;
 }
 
 export interface IConnectedStore {

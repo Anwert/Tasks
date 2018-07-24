@@ -10,8 +10,10 @@ import { Menu } from "./components/Menu/Menu";
 import { Overview } from "./components/Overview/OverviewContainer";
 import { IStoreAll } from "./interfaces";
 import { reducers } from "./reducers";
+import thunk from "redux-thunk";
+import { fetchTasks } from "./actions";
 
-const store: Redux.Store<IStoreAll> = Redux.createStore(reducers);
+const store: Redux.Store<IStoreAll> = Redux.createStore(reducers, Redux.applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

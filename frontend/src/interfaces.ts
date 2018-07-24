@@ -1,14 +1,15 @@
 export type IAction =
    { type: "ADD_TASK", task: ITask }
 |  { type: "FIND_TASK", value: string }
-|  { type: "COMPLETE_TASK", id: string }
-|  { type: "UNDO_COMPLETE_TASK", id: string }
+|  { type: "COMPLETE_TASK", _id: string }
+|  { type: "UNDO_COMPLETE_TASK", _id: string }
 |  { type: "FILTER_TASKS_BY_MONTH", month: number }
-|  { type: "DELETE_TASK", id: string }
-|  { type: "EDIT_TASK", task: ITask };
+|  { type: "DELETE_TASK", _id: string }
+|  { type: "EDIT_TASK", task: ITask }
+|  { type: "FETCH_TASKS_COMPLETED", tasks: ITask[] };
 
 export interface ITask {
-  id?: string;
+  _id?: string;
   value: string;
   date: Date;
   completed: boolean;

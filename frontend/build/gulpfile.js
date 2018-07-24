@@ -1,6 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
+const path = require('path');
 
 function lazyRequireTask(taskName, path, options) {
   options = options || {};
@@ -15,7 +16,7 @@ lazyRequireTask('styles', './tasks/styles');
 lazyRequireTask('assets', './tasks/assets');
 
 lazyRequireTask('webpack', './tasks/webpack', {
-  dirname: __dirname
+  dirname: path.join(__dirname, '../../'),
 });
 
 lazyRequireTask('clean', './tasks/clean');
@@ -27,3 +28,5 @@ lazyRequireTask('serve', './tasks/serve');
 lazyRequireTask('dev', './tasks/dev');
 
 lazyRequireTask('views', './tasks/views');
+
+lazyRequireTask('html', './tasks/html');

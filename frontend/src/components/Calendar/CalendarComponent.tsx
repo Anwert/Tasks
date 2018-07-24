@@ -14,8 +14,8 @@ export const CalendarComponent = (props: IComponentProps) => {
     && task.date.getUTCMonth() === props.date.getUTCMonth()
     && task.date.getDate() === props.date.getDate()) {
       return (
-        <li key={task.id}>
-          <Task id={task.id}/>
+        <li key={task._id}>
+          <Task _id={task._id}/>
         </li>
       );
     }

@@ -1,59 +1,47 @@
 import { combineReducers } from "redux";
 import { IAction, IStoreAll, ITask } from "../interfaces";
 
-const ID = () => {
+const _id = () => {
   return "_" + Math.random().toString(36).substr(2, 9);
 };
 
-const initialState: ITask[] = [{
-  id: ID(),
-  value: "First task",
-  date: new Date(),
-  completed: false,
-}, {
-  id: ID(),
-  value: "Second task",
-  date: new Date(),
-  completed: false,
-}, {
-  id: ID(),
-  value: "Third Task",
-  date: new Date(),
-  completed: false,
-}];
-
-const findByID = (state: ITask[], id: string) => {
+const findBy_id = (state: ITask[], _id: string) => {
   for (let i = 0; i < state.length; i++) {
-    if (state[i].id === id) {
+    if (state[i]._id === _id) {
       return i;
     }
   }
   return -1;
 };
 
-function tasks(state: ITask[] = initialState, action: IAction): ITask[] {
+function tasks(state: ITask[] = [], action: IAction): ITask[] {
   switch (action.type) {
+    case "FETCH_TASKS_COMPLETED":
+      action.tasks.map((task) => {
+        task.date = new Date(task.date);
+      });
+      return action.tasks;
     case "ADD_TASK":
       return [...state,
         {
-          id: ID(),
+          _id: _id(),
           value: action.task.value,
           date: action.task.date,
           completed: false,
         },
       ];
     case "DELETE_TASK":
-      const indexForDelete = findByID(state, action.id);
+      const indexForDelete = findBy_id(state, action._id);
       return [
         ...state.slice(0, indexForDelete),
         ...state.slice(indexForDelete + 1),
       ];
     case "COMPLETE_TASK":
-      const indexForComplete = findByID(state, action.id);
+      const indexForComplete = findBy_id(state, action._id);
       return [
         ...state.slice(0, indexForComplete),
         {
-          id: state[indexForComplete].id,
+          _id: state[indexForComplete]._id,
           value: state[indexForComplete].value,
           date: state[indexForComplete].date,
           completed: true,
@@ -61,11 +49,11 @@ function tasks(state: ITask[] = initialState, action: IAction): ITask[] {
         ...state.slice(indexForComplete + 1),
       ];
     case "UNDO_COMPLETE_TASK":
-      const indexForUndoComplete = findByID(state, action.id);
+      const indexForUndoComplete = findBy_id(state, action._id);
       return [
         ...state.slice(0, indexForUndoComplete),
         {
-          id: state[indexForUndoComplete].id,
+          _id: state[indexForUndoComplete]._id,
           value: state[indexForUndoComplete].value,
           date: state[indexForUndoComplete].date,
           completed: false,
@@ -73,11 +61,11 @@ function tasks(state: ITask[] = initialState, action: IAction): ITask[] {
         ...state.slice(indexForUndoComplete + 1),
       ];
     case "EDIT_TASK":
-      const indexForEdit = findByID(state, action.task.id);
+      const indexForEdit = findBy_id(state, action.task._id);
       return [
         ...state.slice(0, indexForEdit),
         {
-          id: action.task.id,
+          _id: action.task._id,
           value: action.task.value,
           date: action.task.date,
           completed: false,

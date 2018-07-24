@@ -30,7 +30,7 @@ module.exports = function (args) {
     let options = {
       mode: isDevelopment ? 'development' : 'production',
       entry: {
-        index: './frontend/src/index.tsx'
+        index: '../../frontend/src/index.tsx'
       },
       output: {
         publicPath: '/src/',
@@ -57,8 +57,7 @@ module.exports = function (args) {
         }, {
           test: /\.css$/,
           use: [ 'style-loader', 'css-loader' ]
-        }
-        ]
+        }]
       },
       plugins: [
         new webpack.NoEmitOnErrorsPlugin()
@@ -76,7 +75,7 @@ module.exports = function (args) {
     if (!isDevelopment) {
       options.plugins.push(new AssetsPlugin({
         filename: 'webpack.json',
-        path: args.dirname + '/manifest',
+        path: args.dirname + 'manifest',
         processOutput (assets) {
           for (let key in assets) {
             assets[key + '.js'] = assets[key].js.slice(options.output.publicPath.length)
@@ -88,7 +87,7 @@ module.exports = function (args) {
       }))
     };
 
-    return gulp.src('frontend/js/*.js')
+    return gulp.src('../../frontend/js/*.js')
       .pipe(plumber({
         errorHandler: notify.onError(err => ({
           title: 'Webpack',
@@ -97,7 +96,7 @@ module.exports = function (args) {
       }))
       .pipe(named())
       .pipe(webpackStream(options, webpack, done))
-      .pipe(gulp.dest('public/src'))
+      .pipe(gulp.dest('../../public/src'))
       .on('data', function () {
         if (firstBuildReady) {
           callback()

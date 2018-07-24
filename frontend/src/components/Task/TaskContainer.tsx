@@ -7,15 +7,15 @@ import { TaskComponent } from "./TaskComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./TaskInterfaces";
 
 const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore => ({
-  task: store.tasks.find((task) => task.id === ownProps.id),
+  task: store.tasks.find((task) => task._id === ownProps._id),
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
-  completeTask: (id: string) => {
-    dispatch(action.completeTask(id));
+  completeTask: (_id: string) => {
+    dispatch(action.completeTask(_id));
   },
-  undoCompleteTask: (id: string) => {
-    dispatch(action.undoCompleteTask(id));
+  undoCompleteTask: (_id: string) => {
+    dispatch(action.undoCompleteTask(_id));
   },
 });
 
@@ -61,7 +61,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
     this.setState({
       completed: true,
     });
-    this.props.completeTask(this.props.id);
+    this.props.completeTask(this.props._id);
   };
 
   private onUndoCompleteTask = function() {
@@ -69,7 +69,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
       completed: false,
       modalIsOpened: false,
     });
-    this.props.undoCompleteTask(this.props.id);
+    this.props.undoCompleteTask(this.props._id);
   };
 }
 

@@ -9,8 +9,8 @@ export const TaskComponent = (props: IComponentProps) => {
   const renderTask = () => {
     const minutes =
       props.task.date.getMinutes() < 10 ?
-      `0${props.task.date.getMinutes().toString()}`
-      : props.task.date.getMinutes().toString();
+      `0${props.task.date.getMinutes().toString()}` :
+      props.task.date.getMinutes().toString();
     if (!props.completed) {
       return (
         <div>

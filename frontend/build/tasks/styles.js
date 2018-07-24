@@ -17,7 +17,7 @@ const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'develop
 module.exports = function () {
   return function () {
     return combine(
-      gulp.src('frontend/styles/index.styl')
+      gulp.src('../../frontend/styles/index.styl')
         .pipe(plumber({
           errorHandler: notify.onError(err => ({
             title: 'Styles',
@@ -34,10 +34,10 @@ module.exports = function () {
         .pipe(autoprefixer())
         .pipe(gulpIf(isDevelopment, sourcemaps.write()))
         .pipe(gulpIf(!isDevelopment, combine(rev(), revReplace({
-          manifest: gulp.src('manifest/assets.json', {allowEmpty: true})
+          manifest: gulp.src('../../manifest/assets.json', {allowEmpty: true})
         }))))
-        .pipe(gulp.dest('public/styles'))
-        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('manifest'))))
+        .pipe(gulp.dest('../../public/styles'))
+        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('../manifest'))))
     ).on('error', notify.onError())
   }
 }

@@ -16,3 +16,7 @@ export interface IOwnState {
 export interface IConnectedState {
   tasks: ITask[];
 }
+
+export interface IConnectedDispatch {
+  fetchTasks: () => void;
+}

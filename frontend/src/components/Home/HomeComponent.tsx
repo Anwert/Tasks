@@ -65,8 +65,8 @@ export const HomeComponent = (props: IComponentProps) => {
 
   const renderTasks = props.tasks.map((task) => {
     return (
-      <li key={task.id}>
-        <Task id={task.id}/>
+      <li key={task._id}>
+        <Task _id={task._id}/>
       </li>
     );
   });

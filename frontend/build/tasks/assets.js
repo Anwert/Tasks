@@ -11,10 +11,10 @@ const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'develop
 module.exports = function () {
   return function () {
     return combine(
-      gulp.src('../frontend/assets/**/*.*')
+      gulp.src('../../frontend/assets/**/*.*')
         .pipe(gulpIf(!isDevelopment, rev()))
-        .pipe(gulp.dest('../public/assets'))
-        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('assets.json'), gulp.dest('../manifest'))))
+        .pipe(gulp.dest('../../public/assets'))
+        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('assets.json'), gulp.dest('../../manifest'))))
     ).on('error', notify.onError()
     )
   }
