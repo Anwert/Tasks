@@ -6,8 +6,7 @@ export interface IComponentProps {
   modalIsOpened: boolean;
   openModal: () => void;
   closeModal: () => void;
-  onCompleteTask: () => void;
-  onUndoCompleteTask: () => void;
+  onChangeCompleteTask: () => void;
 }
 
 export interface IOwnProps {
@@ -19,8 +18,7 @@ export interface IConnectedStore {
 }
 
 export interface IConnectedDispatch {
-  completeTask: (id: string) => void;
-  undoCompleteTask: (id: string) => void;
+  changeCompleteTask: (id: string) => void;
 }
 
 export interface IOwnState {

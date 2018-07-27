@@ -3,6 +3,8 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
+import thunk from "redux-thunk";
+import { fetchTasks } from "./actions";
 import { Calendar } from "./components/Calendar/CalendarContainer";
 import { Home } from "./components/Home/HomeContainer";
 import { List } from "./components/List/ListContainer";
@@ -10,8 +12,6 @@ import { Menu } from "./components/Menu/Menu";
 import { Overview } from "./components/Overview/OverviewContainer";
 import { IStoreAll } from "./interfaces";
 import { reducers } from "./reducers";
-import thunk from "redux-thunk";
-import { fetchTasks } from "./actions";
 
 const store: Redux.Store<IStoreAll> = Redux.createStore(reducers, Redux.applyMiddleware(thunk));
 

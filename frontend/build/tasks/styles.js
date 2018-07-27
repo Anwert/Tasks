@@ -37,7 +37,7 @@ module.exports = function () {
           manifest: gulp.src('../../manifest/assets.json', {allowEmpty: true})
         }))))
         .pipe(gulp.dest('../../public/styles'))
-        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('../manifest'))))
+        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('../../manifest'))))
     ).on('error', notify.onError())
   }
 }

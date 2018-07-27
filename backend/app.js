@@ -2,11 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const expressValidator = require('express-validator');
-const flash = require('connect-flash');
-const passport = require('passport');
 const database = require('./config/database').database;
+const fs = require('fs');
 
 mongoose.connect(database.path, database.options);
 const db = mongoose.connection;
@@ -28,77 +25,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(express.static(path.join(__dirname, 'public')));
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../manifest/html.json'), 'utf8'));
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true,
+app.use(express.static(path.join(__dirname, '../public'), {
+  index: manifest["index.html"].toString(),
 }));
-
-app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
-
-app.use(expressValidator({
-  errorFormatter: (param, msg, value) => {
-    const namespace = param.split('.')
-    , root = namespace.shift()
-    , formParam = root;
-
-    while (namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-
-    return {
-      param: formParam,
-      msg,
-      value,
-    }
-  },
-}));
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-require('./config/passport')(passport);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// app.get('*', (req, res, next) => {
-//   res.locals.user = req.user || null;
-//   next();
-// });
-
-// app.get('/', (req, res) => {
-//   Article.find({}, (err, articles) => {
-//     if (err) return console.log(err);
-//     res.render('index', {
-//       title: 'Articles',
-//       articles,
-//     });
-//   });
-// });
 
 const tasks = require('./routes/tasks');
 app.use('/tasks', tasks);
 
-// const users = require('./routes/users');
-// app.use('/users', users);
-
 app.listen(3200, () => {
   console.log('Server started on port 3200...');
 });
-
-// const newTask = new Task({
-//   value: "Forth task",
-//   date: new Date,
-//   completed: false,
-// })
-//
-// newTask.save((err, newTask) => {
-//   if (err) console.log(err);
-// });

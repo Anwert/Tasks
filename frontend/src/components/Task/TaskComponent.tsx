@@ -15,7 +15,7 @@ export const TaskComponent = (props: IComponentProps) => {
       return (
         <div>
           <div className="task task__incomplete" onClick={props.openModal}>
-            <button onClick={props.onCompleteTask} className="btn btn__complete"/>
+            <button onClick={props.onChangeCompleteTask} className="btn btn__complete"/>
             <span className="task__value">
               {props.task.value}
               <br/>
@@ -34,7 +34,7 @@ export const TaskComponent = (props: IComponentProps) => {
     } else {
       return (
         <div className="task">
-          <button className="btn btn__completed" onClick={props.onUndoCompleteTask}>
+          <button className="btn btn__completed" onClick={props.onChangeCompleteTask}>
             <i className="fa fa-check" aria-hidden="true" />
           </button>
           <span className="task__value task__completed">

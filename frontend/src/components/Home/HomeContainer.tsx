@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { HomeComponent } from "./HomeComponent";
-import { IConnectedState, IOwnState, IConnectedDispatch } from "./HomeInterfaces";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { IConnectedDispatch, IConnectedState, IOwnState } from "./HomeInterfaces";
 
 const mapStateToProps = (store: IStoreAll): IConnectedState => ({
   tasks: store.tasks.filter((task) => {
@@ -22,8 +22,6 @@ const mapStateToProps = (store: IStoreAll): IConnectedState => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
   fetchTasks: () => dispatch(action.fetchTasks()),
 });
-
-// const mapDispatchToProps = () => {}
 
 class HomeContainer extends React.PureComponent<IConnectedDispatch & IConnectedState, IOwnState> {
 

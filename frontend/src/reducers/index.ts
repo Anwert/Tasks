@@ -21,46 +21,34 @@ function tasks(state: ITask[] = [], action: IAction): ITask[] {
         task.date = new Date(task.date);
       });
       return action.tasks;
-    case "ADD_TASK":
+    case "ADD_TASK_COMPLETED":
       return [...state,
         {
-          _id: _id(),
+          _id: action.task._id,
           value: action.task.value,
-          date: action.task.date,
-          completed: false,
+          date: new Date(action.task.date),
+          completed: action.task.completed,
         },
       ];
-    case "DELETE_TASK":
+    case "DELETE_TASK_COMPLETED":
       const indexForDelete = findBy_id(state, action._id);
       return [
         ...state.slice(0, indexForDelete),
         ...state.slice(indexForDelete + 1),
       ];
-    case "COMPLETE_TASK":
-      const indexForComplete = findBy_id(state, action._id);
+    case "CHANGE_COMPLETE_TASK_COMPLETED":
+      const indexForChangeComplete = findBy_id(state, action._id);
       return [
-        ...state.slice(0, indexForComplete),
+        ...state.slice(0, indexForChangeComplete),
         {
-          _id: state[indexForComplete]._id,
-          value: state[indexForComplete].value,
-          date: state[indexForComplete].date,
-          completed: true,
+          _id: state[indexForChangeComplete]._id,
+          value: state[indexForChangeComplete].value,
+          date: state[indexForChangeComplete].date,
+          completed: !state[indexForChangeComplete].completed,
         },
-        ...state.slice(indexForComplete + 1),
+        ...state.slice(indexForChangeComplete + 1),
       ];
-    case "UNDO_COMPLETE_TASK":
-      const indexForUndoComplete = findBy_id(state, action._id);
-      return [
-        ...state.slice(0, indexForUndoComplete),
-        {
-          _id: state[indexForUndoComplete]._id,
-          value: state[indexForUndoComplete].value,
-          date: state[indexForUndoComplete].date,
-          completed: false,
-        },
-        ...state.slice(indexForUndoComplete + 1),
-      ];
-    case "EDIT_TASK":
+    case "EDIT_TASK_COMPLETED":
       const indexForEdit = findBy_id(state, action.task._id);
       return [
         ...state.slice(0, indexForEdit),

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { TaskComponent } from "./TaskComponent";
@@ -10,13 +11,8 @@ const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore
   task: store.tasks.find((task) => task._id === ownProps._id),
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
-  completeTask: (_id: string) => {
-    dispatch(action.completeTask(_id));
-  },
-  undoCompleteTask: (_id: string) => {
-    dispatch(action.undoCompleteTask(_id));
-  },
+const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
+  changeCompleteTask: (_id: string) => dispatch(action.changeCompleteTask(_id)),
 });
 
 class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
@@ -29,8 +25,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.onCompleteTask = this.onCompleteTask.bind(this);
-    this.onUndoCompleteTask = this.onUndoCompleteTask.bind(this);
+    this.onChangeCompleteTask = this.onChangeCompleteTask.bind(this);
   }
 
   public render() {
@@ -41,8 +36,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
         modalIsOpened={this.state.modalIsOpened}
         openModal={this.openModal}
         closeModal={this.closeModal}
-        onCompleteTask={this.onCompleteTask}
-        onUndoCompleteTask={this.onUndoCompleteTask}
+        onChangeCompleteTask={this.onChangeCompleteTask}
       />
     );
   }
@@ -57,19 +51,12 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
      this.setState({modalIsOpened: false});
    };
 
-  private onCompleteTask = function() {
+  private onChangeCompleteTask = function() {
     this.setState({
-      completed: true,
-    });
-    this.props.completeTask(this.props._id);
-  };
-
-  private onUndoCompleteTask = function() {
-    this.setState({
-      completed: false,
+      completed: !this.state.completed,
       modalIsOpened: false,
     });
-    this.props.undoCompleteTask(this.props._id);
+    this.props.changeCompleteTask(this.props._id);
   };
 }
 

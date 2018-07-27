@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { ModalComponent } from "./ModalComponent";
@@ -10,7 +11,7 @@ const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks,
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
   addTask: (task: ITask) => {
     dispatch(action.addTask(task));
   },
