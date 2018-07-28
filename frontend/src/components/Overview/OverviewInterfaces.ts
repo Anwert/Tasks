@@ -22,6 +22,7 @@ export interface IConnectedStore {
 
 export interface IConnectedDispatch {
   filterTasksByMonth: (month: number) => void;
+  fetchTasks: () => void;
 }
 
 export interface IMonthButtonProps {

@@ -20,7 +20,7 @@ ReactDOM.render(
     <Router>
       <div>
         <Route exact={true} path="/" component={Home}/>
-        <Route path="/menu" component={Menu}/>
+        <Route exact={true} path="/menu" component={Menu}/>
         <Route path="/calendar" component={Calendar}/>
         <Route path="/overview" component={Overview}/>
         <Route path="/list" component={List}/>

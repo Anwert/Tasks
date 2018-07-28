@@ -14,3 +14,7 @@ export interface IOwnState {
 export interface IConnectedStore {
   tasks: ITask[];
 }
+
+export interface IConnectedDispatch {
+  fetchTasks: () => void;
+}

@@ -4,17 +4,21 @@ import * as redux from "redux";
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { CalendarComponent } from "./CalendarComponent";
-import { IConnectedStore, IOwnState } from "./CalendarInterfaces";
+import { IConnectedDispatch, IConnectedStore, IOwnState } from "./CalendarInterfaces";
+import { RouteComponentProps } from "react-router";
+import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>) => ({});
+const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
+  fetchTasks: () => dispatch(action.fetchTasks()),
+});
 
-class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> {
+class CalendarContainer extends React.PureComponent<IConnectedDispatch & IConnectedStore, IOwnState> {
 
-  constructor(props: IConnectedStore) {
+  constructor(props: IConnectedStore & IConnectedDispatch) {
     super(props);
     this.state = {
       date: new Date(),
@@ -23,6 +27,10 @@ class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> 
     this.onClickDay = this.onClickDay.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  public componentWillMount() {
+    this.props.fetchTasks();
   }
 
   public render() {
@@ -51,5 +59,5 @@ class CalendarContainer extends React.PureComponent<IConnectedStore, IOwnState> 
   };
 }
 
-export const Calendar: React.ComponentClass =
+export const Calendar =
   connect(mapStateToProps, mapDispatchToProps)(CalendarContainer);

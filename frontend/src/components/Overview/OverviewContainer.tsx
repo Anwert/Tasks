@@ -5,16 +5,18 @@ import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { OverviewComponent } from "./OverviewComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./OverviewInterfaces";
+import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.date.getUTCMonth() === store.filterTasksByMonth),
   enabledMonth: store.filterTasksByMonth,
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
   filterTasksByMonth: (month: number) => {
     dispatch(action.filterTasksByMonth(month));
   },
+  fetchTasks: () => dispatch(action.fetchTasks()),
 });
 
 class OverviewContainer extends React.PureComponent<IConnectedStore & IConnectedDispatch, IOwnState> {
@@ -29,6 +31,10 @@ class OverviewContainer extends React.PureComponent<IConnectedStore & IConnected
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.enabled = this.enabled.bind(this);
+  }
+
+  public componentWillMount() {
+    this.props.fetchTasks();
   }
 
   public render() {
