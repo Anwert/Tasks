@@ -34,10 +34,13 @@ module.exports = function () {
         .pipe(autoprefixer())
         .pipe(gulpIf(isDevelopment, sourcemaps.write()))
         .pipe(gulpIf(!isDevelopment, combine(rev(), revReplace({
-          manifest: gulp.src('../../manifest/assets.json', {allowEmpty: true})
+          manifest: gulp.src('../../rev-manifest.json', {allowEmpty: true})
         }))))
         .pipe(gulp.dest('../../public/styles'))
-        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('css.json'), gulp.dest('../../manifest'))))
+        .pipe(gulpIf(!isDevelopment, combine(rev.manifest('../../rev-manifest.json', {
+          base: '../../',
+          merge: true,
+        }), gulp.dest('../../'))))
     ).on('error', notify.onError())
   }
 }

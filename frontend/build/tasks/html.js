@@ -12,12 +12,13 @@ module.exports = function () {
     return combine(
       gulp.src('../../frontend/index.html')
       .pipe(gulpIf(!isDevelopment, combine(rev(), revReplace({
-        manifest: gulp.src('../../manifest/css.json', {allowEmpty: true})
-          .pipe(gulp.src('../../manifest/webpack.json', {allowEmpty: true}))
+        manifest: gulp.src('../../rev-manifest.json', {allowEmpty: true})
       }))))
       .pipe(gulp.dest('../../public'))
-      .pipe(gulpIf(!isDevelopment, combine(rev.manifest('html.json'), gulp.dest('../../manifest'))))
-    ).on('error', notify.onError()
-    )
+      .pipe(gulpIf(!isDevelopment, combine(rev.manifest('../../rev-manifest.json', {
+        base: '../../',
+        merge: true,
+      }), gulp.dest('../../'))))
+    ).on('error', notify.onError())
   }
 }

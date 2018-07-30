@@ -4,6 +4,6 @@ const del = require('del')
 
 module.exports = function () {
   return function () {
-    return del(['../../public', '../../manifest'], {force: true})
+    return del(['../../public', '../../rev-manifest.json'], {force: true})
   }
 }

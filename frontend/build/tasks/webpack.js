@@ -74,8 +74,10 @@ module.exports = function (args) {
 
     if (!isDevelopment) {
       options.plugins.push(new AssetsPlugin({
-        filename: 'webpack.json',
-        path: args.dirname + 'manifest',
+        update: true,
+        filename: 'rev-manifest.json',
+        path: args.dirname,
+        prettyPrint: true,
         processOutput (assets) {
           for (let key in assets) {
             assets[key + '.js'] = assets[key].js.slice(options.output.publicPath.length)
