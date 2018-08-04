@@ -1,3 +1,52 @@
+$bordercolor = #ba77ff
+
+.fa
+  width: 15px
+  margin-right: 5px
+
 input
-  display: block
   margin-bottom: 5px
+  font-size: 1em
+  background: 0
+  outline: 0
+  color: white
+  margin: 1px
+  border: 1px
+  height: 25px
+  width: 200px
+  &:focus
+    transition: .2s linear
+    margin: 0
+    border: 1px solid $bgcolor
+
+.button
+  color: white
+  font-size: .9em
+  border: 0
+  outline: 0
+  height: 35px
+  margin: 3px
+  margin-top: 10px
+  margin-right: 10px
+  background-color: $bgcolor
+  border-radius: 5px
+  display: inline-block
+
+  &__main
+    &:hover
+      cursor: pointer
+      background: lighten($bgcolor, 10%)
+
+    &:active
+      background: lighten($bgcolor, 20%)
+
+  &__alt
+    background: 1px
+    font-size: .8em
+
+    &:hover
+      cursor: pointer
+      color: lighten(black, 80%)
+
+    &:active
+      color: lighten(black, 70%)

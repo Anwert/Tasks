@@ -8,6 +8,7 @@ export interface IComponentProps {
 
 export interface IConnectedDispatch {
   signupUser: (user: IUser) => void;
+  signoutUser: () => void;
 }
 
 export interface IConnectedStore {

@@ -122,7 +122,7 @@ export const signinUser: ActionCreator<ThunkAction<void, undefined, undefined, I
 
 export function signoutUser(): IAction {
   return {
-    type: "UNAUTH_USER"
+    type: "UNAUTH_USER",
   }
 }
 

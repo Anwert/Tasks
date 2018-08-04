@@ -40,11 +40,20 @@ export const SignUpComponent = (props: IComponentProps) => {
     <div>
       {isRegistrated()}
       {renderAlert()}
-      <input type="text" placeholder="Email" ref={(input) => {email = input; }}/>
-      <input type="text" placeholder="Password" ref={(input) => {password = input; }}/>
-      <input type="text" placeholder="Password confirmation" ref={(input) => {passwordConfirmation = input; }}/>
-      <Link to="/signin">Sign in</Link>
-      <button onClick={handleSignUp}>Sign up</button>
+      <div>
+        <i className="fa fa-user-alt" aria-hidden="true"/>
+        <input type="text" placeholder="Email" ref={(input) => {email = input; }}/>
+      </div>
+      <div>
+        <i className="fa fa-unlock" aria-hidden="true"/>
+        <input type="text" placeholder="Password" ref={(input) => {password = input; }}/>
+      </div>
+      <div>
+        <i className="fa fa-unlock-alt" aria-hidden="true"/>
+        <input type="text" placeholder="Password confirmation" ref={(input) => {passwordConfirmation = input; }}/>
+      </div>
+      <button onClick={handleSignUp} className="button button__main">Sign up</button>
+      <Link to="/signin" className="button button__alt">Sign in</Link>
     </div>
   );
 };

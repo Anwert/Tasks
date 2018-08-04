@@ -21,7 +21,7 @@ export const MenuComponent = (props: IComponentProps) => {
         Home
       </Link>
       <Link to="/calendar" className="menu__el">
-        <i className="fa fa-calendar-o" aria-hidden="true"/>
+        <i className="fa fa-calendar-alt" aria-hidden="true"/>
         Calendar
       </Link>
       <Link to="/overview" className="menu__el">
@@ -33,7 +33,7 @@ export const MenuComponent = (props: IComponentProps) => {
         List
       </Link>
       <Link to="/logout" className="menu__el">
-        <i className="fa fa-list" aria-hidden="true"/>
+        <i className="fa fa-sign-out-alt" aria-hidden="true"/>
         Logout
       </Link>
     </div>

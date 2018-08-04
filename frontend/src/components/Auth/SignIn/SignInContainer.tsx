@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<undefined, undefined, redux.
   signinUser: (user: IUser) => {
     dispatch(action.signinUser(user));
   },
+  signoutUser: () => {
+    dispatch(action.signoutUser())
+  }
 });
 
 class SignInContainer extends React.PureComponent<IConnectedDispatch & IConnectedStore> {
@@ -22,6 +25,10 @@ class SignInContainer extends React.PureComponent<IConnectedDispatch & IConnecte
   constructor(props: IConnectedDispatch & IConnectedStore) {
     super(props);
     this.handleSignIn = this.handleSignIn.bind(this);
+  }
+
+  public componentWillMount() {
+    this.props.signoutUser();
   }
 
   public render() {
