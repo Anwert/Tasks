@@ -9,12 +9,12 @@ export const addTaskCompleted = (task: ITask): IAction => ({
   task,
 });
 
-export const addTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (task: ITask) => {
+export const addTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (token: string, task: ITask) => {
   return (dispatch: Dispatch<IAction>) => {
     axios.post("http://localhost:3200/tasks/add", {
       value: task.value,
       date: task.date,
-    })
+    }, {headers: {token}},)
     .then((response) => {
       dispatch(addTaskCompleted(response.data));
     })
@@ -29,9 +29,9 @@ export const deleteTaskCompleted = (_id: string): IAction => ({
   _id,
 });
 
-export const deleteTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (_id: string) => {
+export const deleteTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (token: string, _id: string) => {
   return (dispatch: Dispatch<IAction>) => {
-    axios.delete("http://localhost:3200/tasks/delete", {data: { _id }})
+    axios.delete("http://localhost:3200/tasks/delete", {headers: {token}, data: { _id }})
     .then((response) => {
       dispatch(deleteTaskCompleted(_id));
     })
@@ -51,9 +51,9 @@ export const changeCompleteTaskCompleted = (_id: string): IAction => ({
   _id,
 });
 
-export const changeCompleteTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (_id: string) => {
+export const changeCompleteTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (token: string, _id: string) => {
   return (dispatch: Dispatch<IAction>) => {
-    axios.put("http://localhost:3200/tasks/changecomplete", { _id })
+    axios.put("http://localhost:3200/tasks/changecomplete", { _id }, { headers: {token}})
     .then((response) => {
       dispatch(changeCompleteTaskCompleted(_id));
     })
@@ -73,9 +73,9 @@ export const editTaskCompleted = (task: ITask): IAction => ({
   task,
 });
 
-export const editTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (task: ITask) => {
+export const editTask: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (token: string, task: ITask) => {
   return (dispatch: Dispatch<IAction>) => {
-    axios.put("http://localhost:3200/tasks/edit", task)
+    axios.put("http://localhost:3200/tasks/edit", task, {headers: {token}})
     .then((response) => {
       dispatch(editTaskCompleted(task));
     })
@@ -90,9 +90,9 @@ export const fetchTasksCompleted = (tasks: ITask[]): IAction => ({
   tasks,
 });
 
-export const fetchTasks: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = () => {
+export const fetchTasks: ActionCreator<ThunkAction<void, ITask[], undefined, IAction>> = (token: string) => {
   return (dispatch: Dispatch<IAction>) => {
-    axios.get("http://localhost:3200/tasks/get")
+    axios.get("http://localhost:3200/tasks/get", {headers: {token}})
     .then((response) => {
       dispatch(fetchTasksCompleted(response.data));
     })

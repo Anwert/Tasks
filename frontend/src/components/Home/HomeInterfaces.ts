@@ -20,5 +20,5 @@ export interface IConnectedState {
 }
 
 export interface IConnectedDispatch {
-  fetchTasks: () => void;
+  fetchTasks: (token: string) => void;
 }

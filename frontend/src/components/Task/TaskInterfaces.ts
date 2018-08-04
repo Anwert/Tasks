@@ -15,10 +15,11 @@ export interface IOwnProps {
 
 export interface IConnectedStore {
   task: ITask;
+  token: string;
 }
 
 export interface IConnectedDispatch {
-  changeCompleteTask: (id: string) => void;
+  changeCompleteTask: (token: string, _id: string) => void;
 }
 
 export interface IOwnState {

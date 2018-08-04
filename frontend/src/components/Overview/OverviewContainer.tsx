@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.An
   filterTasksByMonth: (month: number) => {
     dispatch(action.filterTasksByMonth(month));
   },
-  fetchTasks: () => dispatch(action.fetchTasks()),
+  fetchTasks: (token: string) => dispatch(action.fetchTasks(token)),
 });
 
 class OverviewContainer extends React.PureComponent<IConnectedStore & IConnectedDispatch, IOwnState> {
@@ -35,7 +35,7 @@ class OverviewContainer extends React.PureComponent<IConnectedStore & IConnected
   }
 
   public componentWillMount() {
-    this.props.fetchTasks();
+    this.props.fetchTasks(this.props.token);
   }
 
   public render() {

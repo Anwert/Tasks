@@ -9,10 +9,11 @@ import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./Tas
 
 const mapStateToProps = (store: IStoreAll, ownProps: IOwnProps): IConnectedStore => ({
   task: store.tasks.find((task) => task._id === ownProps._id),
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
-  changeCompleteTask: (_id: string) => dispatch(action.changeCompleteTask(_id)),
+  changeCompleteTask: (token: string, _id: string) => dispatch(action.changeCompleteTask(token, _id)),
 });
 
 class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
@@ -56,7 +57,7 @@ class TaskContainer extends React.PureComponent<IConnectedStore & IConnectedDisp
       completed: !this.state.completed,
       modalIsOpened: false,
     });
-    this.props.changeCompleteTask(this.props._id);
+    this.props.changeCompleteTask(this.props.token, this.props._id);
   };
 }
 

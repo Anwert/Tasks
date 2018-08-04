@@ -9,17 +9,18 @@ import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./Mod
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks,
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
-  addTask: (task: ITask) => {
-    dispatch(action.addTask(task));
+  addTask: (token: string, task: ITask) => {
+    dispatch(action.addTask(token, task));
   },
-  deleteTask: (_id: string) => {
-    dispatch(action.deleteTask(_id));
+  deleteTask: (token: string, _id: string) => {
+    dispatch(action.deleteTask(token, _id));
   },
-  editTask: (task: ITask) => {
-    dispatch(action.editTask(task));
+  editTask: (token: string, task: ITask) => {
+    dispatch(action.editTask(token, task));
   },
 });
 
@@ -122,16 +123,16 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
         this.props.onRequestClose();
         if (this.props.task) {
           this.task = {_id: this.props.task._id, ...this.task};
-          this.props.editTask(this.task);
+          this.props.editTask(this.props.token, this.task);
         } else {
-          this.props.addTask(this.task);
+          this.props.addTask(this.props.token, this.task);
         }
       }
     };
 
   private onDeleteTask = function() {
     this.props.onRequestClose();
-    this.props.deleteTask(this.props.task._id);
+    this.props.deleteTask(this.props.token, this.props.task._id);
   };
 
   private onClickDay = function(date: Date) {

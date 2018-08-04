@@ -22,7 +22,7 @@ const mapStateToProps = (store: IStoreAll): IConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
-  fetchTasks: () => dispatch(action.fetchTasks()),
+  fetchTasks: (token: string) => dispatch(action.fetchTasks(token)),
 });
 
 class HomeContainer extends React.PureComponent<IConnectedDispatch & IConnectedState, IOwnState> {
@@ -38,7 +38,7 @@ class HomeContainer extends React.PureComponent<IConnectedDispatch & IConnectedS
   }
 
   public componentWillMount() {
-    this.props.fetchTasks();
+    this.props.fetchTasks(this.props.token);
   }
 
   public render() {

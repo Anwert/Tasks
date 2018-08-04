@@ -29,10 +29,11 @@ export interface IOwnState {
 
 export interface IConnectedStore {
   tasks: ITask[];
+  token: string;
 }
 
 export interface IConnectedDispatch {
-  addTask: (task: ITask) => void;
-  deleteTask: (id: string) => void;
-  editTask: (task: ITask) => void;
+  addTask: (token: string, task: ITask) => void;
+  deleteTask: (token: string, id: string) => void;
+  editTask: (token: string, task: ITask) => void;
 }
