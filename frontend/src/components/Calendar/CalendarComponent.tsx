@@ -6,6 +6,7 @@ import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
 import { Task } from "../Task/TaskContainer";
 import { IComponentProps } from "./CalendarInterfaces";
+import { Redirect } from "react-router-dom";
 
 export const CalendarComponent = (props: IComponentProps) => {
 
@@ -21,8 +22,15 @@ export const CalendarComponent = (props: IComponentProps) => {
     }
   });
 
+  const isAuthorized = () => {
+    if (!props.token) return (
+      <Redirect from="/calendar" to="/signin" />
+    )
+  }
+
   return (
     <div className="App">
+      {isAuthorized()}
       <MenuButton />
       <Find />
       <Calendar

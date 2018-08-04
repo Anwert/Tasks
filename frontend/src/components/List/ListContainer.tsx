@@ -9,6 +9,7 @@ import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
@@ -33,6 +34,7 @@ class ListContainer extends React.PureComponent<IConnectedDispatch & IConnectedS
   public render() {
     return (
       <ListComponent
+        token={this.props.token}
         modalIsOpened={this.state.modalIsOpened}
         openModal={this.openModal}
         closeModal={this.closeModal}

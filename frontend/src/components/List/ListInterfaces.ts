@@ -5,6 +5,7 @@ export interface IComponentProps {
   modalIsOpened: boolean;
   openModal: () => void;
   closeModal: () => void;
+  token: string;
 }
 
 export interface IOwnState {
@@ -13,6 +14,7 @@ export interface IOwnState {
 
 export interface IConnectedStore {
   tasks: ITask[];
+  token: string;
 }
 
 export interface IConnectedDispatch {

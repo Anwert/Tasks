@@ -4,6 +4,7 @@ import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
 import { Task } from "../Task/TaskContainer";
 import { IComponentProps } from "./HomeInterfaces";
+import { Redirect } from "react-router-dom";
 
 const renderDay = (day: number) => {
   switch (day) {
@@ -71,8 +72,15 @@ export const HomeComponent = (props: IComponentProps) => {
     );
   });
 
+  const isAuthorized = () => {
+    if (!props.token) return (
+      <Redirect from="/home" to="/signin" />
+    )
+  }
+
   return (
     <div>
+      {isAuthorized()}
       <MenuButton />
       <div className="hello">Hello!</div>
       <div className="show__day">

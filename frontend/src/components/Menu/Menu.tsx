@@ -6,7 +6,7 @@ import * as redux from "redux";
 export const Menu = () => {
   return (
     <div className="menu">
-      <Link to="/" className="menu__el">
+      <Link to="/home" className="menu__el">
         <i className="fa fa-home fa-fw" aria-hidden="true"/>
         Home
       </Link>
@@ -21,6 +21,10 @@ export const Menu = () => {
       <Link to="/list" className="menu__el">
         <i className="fa fa-list" aria-hidden="true"/>
         List
+      </Link>
+      <Link to="/logout" className="menu__el">
+        <i className="fa fa-list" aria-hidden="true"/>
+        Logout
       </Link>
     </div>
   );

@@ -7,6 +7,7 @@ export interface IComponentProps {
   onClickDay: (date: Date) => void;
   openModal: () => void;
   closeModal: () => void;
+  token: string;
 }
 
 export interface IOwnState {
@@ -16,6 +17,7 @@ export interface IOwnState {
 
 export interface IConnectedStore {
   tasks: ITask[];
+  token: string;
 }
 
 export interface IConnectedDispatch {

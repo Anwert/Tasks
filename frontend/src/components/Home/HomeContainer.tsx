@@ -6,6 +6,7 @@ import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { HomeComponent } from "./HomeComponent";
 import { IConnectedDispatch, IConnectedState, IOwnState } from "./HomeInterfaces";
+import { Redirect } from "react-router-dom";
 
 const mapStateToProps = (store: IStoreAll): IConnectedState => ({
   tasks: store.tasks.filter((task) => {
@@ -17,6 +18,7 @@ const mapStateToProps = (store: IStoreAll): IConnectedState => ({
       }
     return false;
   }),
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
@@ -42,6 +44,7 @@ class HomeContainer extends React.PureComponent<IConnectedDispatch & IConnectedS
   public render() {
     return (
       <HomeComponent
+        token={this.props.token}
         date={this.state.date}
         modalIsOpened={this.state.modalIsOpened}
         tasks={this.props.tasks}

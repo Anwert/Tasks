@@ -9,6 +9,7 @@ export interface IComponentProps {
   getDate: () => Date;
   openModal: () => void;
   closeModal: () => void;
+  token: string;
 }
 
 export interface IOwnState {
@@ -18,6 +19,7 @@ export interface IOwnState {
 export interface IConnectedStore {
   tasks: ITask[];
   enabledMonth: number;
+  token: string;
 }
 
 export interface IConnectedDispatch {

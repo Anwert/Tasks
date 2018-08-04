@@ -6,6 +6,7 @@ export interface IComponentProps {
   tasks: ITask[];
   openModal: () => void;
   closeModal: () => void;
+  token: string;
 }
 
 export interface IOwnState {
@@ -15,6 +16,7 @@ export interface IOwnState {
 
 export interface IConnectedState {
   tasks: ITask[];
+  token: string;
 }
 
 export interface IConnectedDispatch {

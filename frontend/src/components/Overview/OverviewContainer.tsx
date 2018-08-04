@@ -10,6 +10,7 @@ import { ThunkDispatch } from "redux-thunk";
 const mapStateToProps = (store: IStoreAll): IConnectedStore => ({
   tasks: store.tasks.filter((task) => task.date.getUTCMonth() === store.filterTasksByMonth),
   enabledMonth: store.filterTasksByMonth,
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
@@ -40,6 +41,7 @@ class OverviewContainer extends React.PureComponent<IConnectedStore & IConnected
   public render() {
     return (
       <OverviewComponent
+        token={this.props.token}
         tasks={this.props.tasks}
         enabledMonth={this.props.enabledMonth}
         modalIsOpened={this.state.modalIsOpened}

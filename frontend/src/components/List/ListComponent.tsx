@@ -5,6 +5,7 @@ import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
 import { Task } from "../Task/TaskContainer";
 import { IComponentProps } from "./ListInterfaces";
+import { Redirect } from "react-router-dom";
 
 export const ListComponent = (props: IComponentProps) => {
 
@@ -16,8 +17,15 @@ export const ListComponent = (props: IComponentProps) => {
     );
   });
 
+  const isAuthorized = () => {
+    if (!props.token) return (
+      <Redirect from="/list" to="/signin" />
+    )
+  }
+
   return (
     <div>
+      {isAuthorized()}
       <MenuButton />
       <Find />
       <ul className="tasks">

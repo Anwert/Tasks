@@ -5,11 +5,11 @@ import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { CalendarComponent } from "./CalendarComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./CalendarInterfaces";
-import { RouteComponentProps } from "react-router";
 import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
+  token: store.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.AnyAction>): IConnectedDispatch => ({
@@ -36,6 +36,7 @@ class CalendarContainer extends React.PureComponent<IConnectedDispatch & IConnec
   public render() {
     return (
       <CalendarComponent
+        token={this.props.token}
         date={this.state.date}
         modalIsOpened={this.state.modalIsOpened}
         onClickDay={this.onClickDay}
