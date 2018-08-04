@@ -2,10 +2,20 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as redux from "redux";
+import { Redirect } from "react-router-dom";
+import { IComponentProps } from "./MenuInterfaces";
 
-export const Menu = () => {
+export const MenuComponent = (props: IComponentProps) => {
+
+  const isAuthorized = () => {
+    if (!props.token) return (
+      <Redirect from="/menu" to="/signin" />
+    )
+  }
+
   return (
     <div className="menu">
+      {isAuthorized()}
       <Link to="/home" className="menu__el">
         <i className="fa fa-home fa-fw" aria-hidden="true"/>
         Home

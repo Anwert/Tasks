@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const database = require('./config/database').database;
 const path = require('path');
 const morgan = require('morgan');
-const usersRouter = require('./routes/usersRouter');
+const authenticationRouter = require('./routes/authenticationRouter');
 const cors = require('cors');
 
 mongoose.connect(database.path, database.options);
@@ -30,12 +30,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //authentication routes
-usersRouter(app);
+authenticationRouter(app);
 
-const tasks = require('./routes/tasks');
+const tasks = require('./routes/tasksRouter');
 app.use('/tasks', tasks);
 
-const root = require('./routes/root');
+const root = require('./routes/rootRouter');
 app.use('', root);
 
 app.listen(3200, () => {

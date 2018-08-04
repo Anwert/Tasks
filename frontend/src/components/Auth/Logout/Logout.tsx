@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
 import * as action from "../../../actions";
-import { IAction, IStoreAll, IUser } from "../../../interfaces";
 import { IConnectedDispatch } from "./LogoutInterfaces";
 import { ThunkDispatch } from "redux-thunk";
 import { Redirect } from "react-router-dom";

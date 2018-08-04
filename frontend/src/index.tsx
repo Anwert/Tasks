@@ -4,11 +4,12 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import * as Redux from "redux";
 import thunk from "redux-thunk";
+
 import { fetchTasks } from "./actions";
 import { Calendar } from "./components/Calendar/CalendarContainer";
 import { Home } from "./components/Home/HomeContainer";
 import { List } from "./components/List/ListContainer";
-import { Menu } from "./components/Menu/Menu";
+import { Menu } from "./components/Menu/MenuContainer";
 import { Overview } from "./components/Overview/OverviewContainer";
 import { IStoreAll } from "./interfaces";
 import { reducers } from "./reducers";

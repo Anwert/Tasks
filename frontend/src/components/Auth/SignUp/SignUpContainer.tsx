@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
 import * as action from "../../../actions";
-import { IAction, IStoreAll, IUser } from "../../../interfaces";
+import { IStoreAll, IUser } from "../../../interfaces";
 import { SignUpComponent } from "./SignUpComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./SignUpInterfaces";
 import { ThunkDispatch } from "redux-thunk";

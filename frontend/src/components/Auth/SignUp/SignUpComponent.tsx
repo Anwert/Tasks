@@ -19,7 +19,7 @@ export const SignUpComponent = (props: IComponentProps) => {
           Error!
         </div>
       )
-    } else if(props.auth.error) {
+    } else if (props.auth.error) {
       return (
         <div className="alert alert-danger">
           <strong>Oops: </strong>{props.auth.error}
