@@ -15,13 +15,13 @@ export const SignUpComponent = (props: IComponentProps) => {
   const renderAlert = () => {
     if (props.error) {
       return (
-        <div className="alert alert-danger">
-          Error!
+        <div className="alert">
+          Passwords don't match!
         </div>
       )
     } else if (props.auth.error) {
       return (
-        <div className="alert alert-danger">
+        <div className="alert">
           <strong>Oops: </strong>{props.auth.error}
         </div>
       )

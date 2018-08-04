@@ -14,7 +14,7 @@ export const SignInComponent = (props: IComponentProps) => {
   const renderAlert = () => {
     if(props.auth.error) {
       return (
-        <div className="alert alert-danger">
+        <div className="alert">
           <strong>Oops: </strong>{props.auth.error}
         </div>
       )
