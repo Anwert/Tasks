@@ -1,11 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 import * as action from "../../../actions";
 import { IStoreAll, IUser } from "../../../interfaces";
 import { SignUpComponent } from "./SignUpComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./SignUpInterfaces";
-import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll) => ({
   auth: store.auth,

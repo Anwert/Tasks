@@ -1,11 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
 import { CalendarComponent } from "./CalendarComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./CalendarInterfaces";
-import { ThunkDispatch } from "redux-thunk";
 
 const mapStateToProps = (store: IStoreAll) => ({
   tasks: store.tasks.filter((task) => task.value.includes(store.filterTasks)),
@@ -30,7 +31,7 @@ class CalendarContainer extends React.PureComponent<IConnectedDispatch & IConnec
   }
 
   public componentWillMount() {
-    this.props.fetchTasks(this.props.token);
+    if (this.props.token) { this.props.fetchTasks(this.props.token); }
   }
 
   public render() {

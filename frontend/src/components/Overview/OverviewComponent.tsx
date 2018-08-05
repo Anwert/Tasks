@@ -1,11 +1,12 @@
 import * as React from "react";
+import { Redirect } from "react-router-dom";
+
 import { ITask } from "../../interfaces";
 import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";
 import { MonthButton } from "./MonthButton";
 import { IComponentProps } from "./OverviewInterfaces";
-import { Redirect } from "react-router-dom";
 
 const renderCompleted = (tasks: ITask[]) => {
   const allTasks = tasks.length;
@@ -29,10 +30,11 @@ const renderOverdue = (tasks: ITask[]) => {
 
 export const OverviewComponent = (props: IComponentProps) => {
   const isAuthorized = () => {
-    if (!props.token) return (
+    if (!props.token) { return (
       <Redirect from="/overview" to="/signin" />
-    )
-  }
+    );
+    }
+  };
 
   return (
     <div>
@@ -130,5 +132,5 @@ export const OverviewComponent = (props: IComponentProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 };

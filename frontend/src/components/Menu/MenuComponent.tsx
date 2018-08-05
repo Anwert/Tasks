@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import * as redux from "redux";
-import { Redirect } from "react-router-dom";
+
 import { IComponentProps } from "./MenuInterfaces";
 
 export const MenuComponent = (props: IComponentProps) => {

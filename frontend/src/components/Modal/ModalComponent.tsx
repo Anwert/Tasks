@@ -1,6 +1,7 @@
 import * as React from "react";
 import Calendar from "react-calendar/dist/entry.nostyle";
 import * as ReactModal from "react-modal";
+
 import { ITask } from "../../interfaces";
 import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";

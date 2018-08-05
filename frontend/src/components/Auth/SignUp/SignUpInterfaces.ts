@@ -1,4 +1,4 @@
-import { IUser, IAuth } from "../../../interfaces";
+import { IAuth, IUser } from "../../../interfaces";
 
 export interface IComponentProps {
   handleSignUp: (email: string, password: string, passwordConfirmation: string) => void;

@@ -1,7 +1,7 @@
 import * as React from "react";
+import { Link, Redirect } from "react-router-dom";
+
 import { IComponentProps } from "./SignInInterfaces";
-import { Link } from "react-router-dom";
-import { Redirect} from "react-router-dom";
 
 let email: HTMLInputElement;
 let password: HTMLInputElement;

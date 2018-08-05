@@ -1,10 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as redux from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 import * as action from "../../../actions";
 import { IConnectedDispatch } from "./LogoutInterfaces";
-import { ThunkDispatch } from "redux-thunk";
-import { Redirect } from "react-router-dom";
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<undefined, undefined, redux.AnyAction>): IConnectedDispatch => ({
   signoutUser: () => {
@@ -14,7 +15,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<undefined, undefined, redux.
 
 class LogoutContainer extends React.PureComponent<IConnectedDispatch> {
 
-  constructor (props: IConnectedDispatch) {
+  constructor(props: IConnectedDispatch) {
     super(props);
   }
 
