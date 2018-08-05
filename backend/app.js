@@ -1,13 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const database = require('./config/database').database;
 const path = require('path');
-const morgan = require('morgan');
-const authenticationRouter = require('./routes/authenticationRouter');
 const cors = require('cors');
 
-mongoose.connect(database.path, database.options);
+const config = require('./config/database');
+
+mongoose.connect(config.database.path, config.database.options);
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -20,9 +19,10 @@ db.on('error', (err) => {
 
 const app = express();
 
+app.set('jwtTokenSecret', config.secret);
+
 const Task = require('./models/task');
 
-app.use(morgan('combined'));
 app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,13 +30,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //authentication routes
-authenticationRouter(app);
+const authenticationRouter = require('./routes/authenticationRouter');
+app.use('/', authenticationRouter);
 
-const tasks = require('./routes/tasksRouter');
-app.use('/tasks', tasks);
+//tasks routes
+const tasksRouter = require('./routes/tasksRouter');
+app.use('/tasks', tasksRouter);
 
-const root = require('./routes/rootRouter');
-app.use('', root);
+const indexRouter = require('./routes/indexRouter');
+app.use('/', indexRouter);
 
 app.listen(3200, () => {
   console.log('Server started on port 3200...');

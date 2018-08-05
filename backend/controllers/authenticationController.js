@@ -1,6 +1,7 @@
 const jwt = require('jwt-simple');
-const User = require('../models/user');
+
 const config = require('../config/database');
+const User = require('../models/user');
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -43,12 +44,10 @@ exports.signup = function (req, res, next) {
       if (err) {
         return next(err);
       }
-
       res.send("User was added successfully");
     });
 
   });
-
 
   // If a user with email does not exist, create and save a user record
 
