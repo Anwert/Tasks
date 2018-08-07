@@ -42,7 +42,7 @@ export const SignInComponent = (props: IComponentProps) => {
       <div>
         <i className="fa fa-key" aria-hidden="true"/>
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           onChange={props.handleChangePassword}
           onFocus={handleFocus}

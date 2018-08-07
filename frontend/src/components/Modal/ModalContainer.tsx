@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as redux from "redux";
 import { ThunkDispatch } from "redux-thunk";
+import * as ReactDOM from "react-dom";
 
 import * as action from "../../actions";
 import { IAction, IStoreAll, ITask } from "../../interfaces";
@@ -27,8 +28,12 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<ITask[], undefined, redux.An
 
 class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDispatch & IOwnProps, IOwnState> {
 
+  public component: React.RefObject<HTMLDivElement>;
+
   constructor(props: IConnectedStore & IConnectedDispatch & IOwnProps) {
     super(props);
+
+    this.component = React.createRef();
 
     this.state = {
       emptyTask: false,
@@ -47,6 +52,15 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     this.handleChangeMinutes = this.handleChangeMinutes.bind(this);
     this.handleChangeTask = this.handleChangeTask.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
+    this.focusComponent = this.focusComponent.bind(this);
+  }
+
+  public componentDidMount() {
+    this.focusComponent();
+  }
+
+  private focusComponent() {
+    this.component.current.focus();
   }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
@@ -57,22 +71,23 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
 
   public render() {
     return (
-      <ModalComponent
-        onAddOrEditTask={this.onAddOrEditTask}
-        onDeleteTask={this.onDeleteTask}
-        onClickDay={this.onClickDay}
-        emptyTask={this.state.emptyTask}
-        dateError={this.state.dateError}
-        taskExists={this.state.taskExists}
-        task={this.props.task}
-        date={this.state.date}
-        onRequestClose={this.onRequestClose}
-        isOpen={this.props.isOpen}
-        handleChangeHours={this.handleChangeHours}
-        handleChangeMinutes={this.handleChangeMinutes}
-        handleChangeTask={this.handleChangeTask}
-        handleEnterPress={this.handleEnterPress}
-      />
+      <div ref={this.component} onKeyPress={this.handleEnterPress}>
+        <ModalComponent
+          onAddOrEditTask={this.onAddOrEditTask}
+          onDeleteTask={this.onDeleteTask}
+          onClickDay={this.onClickDay}
+          emptyTask={this.state.emptyTask}
+          dateError={this.state.dateError}
+          taskExists={this.state.taskExists}
+          task={this.props.task}
+          date={this.state.date}
+          onRequestClose={this.onRequestClose}
+          isOpen={this.props.isOpen}
+          handleChangeHours={this.handleChangeHours}
+          handleChangeMinutes={this.handleChangeMinutes}
+          handleChangeTask={this.handleChangeTask}
+        />
+      </div>
     );
   }
 
@@ -162,7 +177,9 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
   };
 
   private onClickDay = function(date: Date) {
-    this.setState({date});
+    let newDate = this.state.date;
+    newDate.setDate(date.getDate());
+    this.setState({date: newDate});
   };
 
   private handleChangeHours = (event: React.ChangeEvent<HTMLInputElement>) => {

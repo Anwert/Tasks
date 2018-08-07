@@ -26,6 +26,7 @@ class SignUpContainer extends React.PureComponent<IConnectedDispatch & IConnecte
 
   constructor (props: IConnectedDispatch & IConnectedStore) {
     super(props);
+
     this.state = {
       redirectToSignIn: false,
       emailError: false,

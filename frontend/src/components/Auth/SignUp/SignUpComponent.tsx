@@ -53,7 +53,7 @@ export const SignUpComponent = (props: IComponentProps) => {
       <div>
         <i className="fa fa-unlock" aria-hidden="true"/>
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           onChange={props.handleChangePassword}
           onFocus={handleFocus}
@@ -62,7 +62,7 @@ export const SignUpComponent = (props: IComponentProps) => {
       <div>
         <i className="fa fa-unlock-alt" aria-hidden="true"/>
         <input
-          type="text"
+          type="password"
           placeholder="Password confirmation"
           onChange={props.handleChangePasswordConfirmation}
           onFocus={handleFocus}

@@ -10,7 +10,7 @@ import { IComponentProps } from "./ModalInterfaces";
 
 ReactModal.setAppElement("#index");
 
-export const ModalComponent = (props: IComponentProps) => {
+export const ModalComponent = (props: IComponentProps, ref: React.RefObject<HTMLDivElement>) => {
 
   const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.select();
@@ -141,7 +141,6 @@ export const ModalComponent = (props: IComponentProps) => {
       className="modal"
       overlayClassName="overlay"
     >
-      <div onKeyPress={props.handleEnterPress}>
         {renderTaskExistsError()}
         {renderTaskIsEmptyError()}
         {renderDateError()}
@@ -153,7 +152,6 @@ export const ModalComponent = (props: IComponentProps) => {
         {renderForm()}
         {renderTime()}
         {renderButtons()}
-      </div>
     </ReactModal>
   );
 };
