@@ -1,9 +1,17 @@
-import { IAuth, IUser } from "../../../interfaces";
+import * as React from "react";
+
+import { IUser, IAuth } from "../../../interfaces";
 
 export interface IComponentProps {
-  handleSignUp: (email: string, password: string, passwordConfirmation: string) => void;
   auth: IAuth;
-  error: boolean;
+  hideErrors: () => void;
+  emailError: boolean;
+  passwordEmpty: boolean;
+  passwordsError: boolean;
+  handleSignUp: (event: React.SyntheticEvent) => void;
+  handleChangeEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangePasswordConfirmation: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IConnectedDispatch {
@@ -16,6 +24,11 @@ export interface IConnectedStore {
 }
 
 export interface IOwnState {
-  error: boolean;
   redirectToSignIn: boolean;
+  emailError: boolean;
+  passwordEmpty: boolean;
+  passwordsError: boolean;
+  emailInput: string;
+  passwordInput: string;
+  passwordConfirmationInput: string;
 }

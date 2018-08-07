@@ -3,23 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import { IComponentProps } from "./SignInInterfaces";
 
-let email: HTMLInputElement;
-let password: HTMLInputElement;
-
 export const SignInComponent = (props: IComponentProps) => {
-  const handleSignIn = () => {
-    props.handleSignIn(email.value, password.value)
-  }
-
-  const renderAlert = () => {
-    if(props.auth.error) {
-      return (
-        <div className="alert">
-          <strong>Oops: </strong>{props.auth.error}
-        </div>
-      )
-    }
-  }
 
   const redirectToHome = () => {
     if (props.auth.token) {
@@ -29,20 +13,45 @@ export const SignInComponent = (props: IComponentProps) => {
     }
   }
 
+  const renderAlert = () => {
+    if(props.auth.error) {
+      return (`Error: ${props.auth.error}`);
+    }
+  }
+
+  const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.hideErrors();
+    event.target.select();
+  };
+
   return (
-    <div>
+    <form onSubmit={props.handleSignIn}>
       {redirectToHome()}
-      {renderAlert()}
+      <div className="alert">
+        {renderAlert()}
+      </div>
       <div>
         <i className="fa fa-user-alt" aria-hidden="true"/>
-        <input type="text" placeholder="Email" ref={(input) => {email = input; }} />
+        <input
+          type="text"
+          placeholder="Email"
+          onChange={props.handleChangeEmail}
+          onFocus={handleFocus}
+        />
       </div>
       <div>
         <i className="fa fa-key" aria-hidden="true"/>
-        <input type="text" placeholder="Password" ref={(input) => {password = input; }}/>
+        <input
+          type="text"
+          placeholder="Password"
+          onChange={props.handleChangePassword}
+          onFocus={handleFocus}
+        />
       </div>
-      <button onClick={handleSignIn} className="button button__main">Sign in</button>
+      <button type="submit" className="button button__main">
+        Sign in
+      </button>
       <Link to="/signup" className="button button__alt">Sign up</Link>
-    </div>
+    </form>
   );
 };

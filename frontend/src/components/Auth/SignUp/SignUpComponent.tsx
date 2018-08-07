@@ -3,30 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import { IComponentProps } from "./SignUpInterfaces";
 
-let email: HTMLInputElement;
-let password: HTMLInputElement;
-let passwordConfirmation: HTMLInputElement;
-
 export const SignUpComponent = (props: IComponentProps) => {
-  const handleSignUp = () => {
-    props.handleSignUp(email.value, password.value, passwordConfirmation.value)
-  }
-
-  const renderAlert = () => {
-    if (props.error) {
-      return (
-        <div className="alert">
-          Passwords don't match!
-        </div>
-      )
-    } else if (props.auth.error) {
-      return (
-        <div className="alert">
-          <strong>Oops: </strong>{props.auth.error}
-        </div>
-      )
-    }
-  }
 
   const isRegistrated = () => {
     if (props.auth.registrated) {
@@ -36,24 +13,65 @@ export const SignUpComponent = (props: IComponentProps) => {
     }
   }
 
+  const renderAlert = () => {
+
+    if (props.emailError && props.passwordEmpty)
+      return "Email is incorrect and password can't be empty!";
+
+    if (props.emailError && props.passwordsError)
+      return "Email is incorrect and passwords don't match!";
+
+    if (props.emailError) return "Email is incorrect!";
+
+    if (props.passwordEmpty) return "Password can't be empty!"
+
+    if (props.passwordsError) return "Passwords don't match!";
+
+    if (props.auth.error) return props.auth.error;
+  }
+
+  const handleFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.hideErrors();
+    event.target.select();
+  };
+
   return (
-    <div>
+    <form onSubmit={props.handleSignUp}>
       {isRegistrated()}
-      {renderAlert()}
+      <div className="alert">
+        {renderAlert()}
+      </div>
       <div>
         <i className="fa fa-user-alt" aria-hidden="true"/>
-        <input type="text" placeholder="Email" ref={(input) => {email = input; }}/>
+        <input
+          type="text"
+          placeholder="Email"
+          onChange={props.handleChangeEmail}
+          onFocus={handleFocus}
+        />
       </div>
       <div>
         <i className="fa fa-unlock" aria-hidden="true"/>
-        <input type="text" placeholder="Password" ref={(input) => {password = input; }}/>
+        <input
+          type="text"
+          placeholder="Password"
+          onChange={props.handleChangePassword}
+          onFocus={handleFocus}
+        />
       </div>
       <div>
         <i className="fa fa-unlock-alt" aria-hidden="true"/>
-        <input type="text" placeholder="Password confirmation" ref={(input) => {passwordConfirmation = input; }}/>
+        <input
+          type="text"
+          placeholder="Password confirmation"
+          onChange={props.handleChangePasswordConfirmation}
+          onFocus={handleFocus}
+        />
       </div>
-      <button onClick={handleSignUp} className="button button__main">Sign up</button>
+      <button type="submit" className="button button__main">
+        Sign up
+      </button>
       <Link to="/signin" className="button button__alt">Sign in</Link>
-    </div>
+    </form>
   );
 };

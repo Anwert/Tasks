@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 import * as Redux from "redux";
 import thunk from "redux-thunk";
 
-import { fetchTasks } from "./actions";
 import { Logout } from "./components/Auth/Logout/Logout";
 import { SignIn } from "./components/Auth/SignIn/SignInContainer";
 import { SignUp } from "./components/Auth/SignUp/SignUpContainer";
