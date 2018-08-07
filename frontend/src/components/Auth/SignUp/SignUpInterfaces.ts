@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { IUser, IAuth } from "../../../interfaces";
 
 export interface IComponentProps {

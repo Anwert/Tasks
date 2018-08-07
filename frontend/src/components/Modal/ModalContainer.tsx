@@ -35,9 +35,9 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
       dateError: false,
       taskExists: false,
       date: props.task ? props.task.date : props.date ? props.date : new Date(),
-      hoursInput: '',
-      minutesInput: '',
-      taskInput: '',
+      hoursInput: props.task ? props.task.date.getHours().toString() : '',
+      minutesInput: props.task ? props.task.date.getMinutes().toString() : '',
+      taskInput: props.task ? props.task.value : '',
     };
     this.checkTasks = this.checkTasks.bind(this);
     this.onAddOrEditTask = this.onAddOrEditTask.bind(this);
@@ -46,6 +46,7 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     this.handleChangeHours = this.handleChangeHours.bind(this);
     this.handleChangeMinutes = this.handleChangeMinutes.bind(this);
     this.handleChangeTask = this.handleChangeTask.bind(this);
+    this.handleEnterPress = this.handleEnterPress.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
@@ -65,11 +66,12 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
         taskExists={this.state.taskExists}
         task={this.props.task}
         date={this.state.date}
-        onRequestClose={this.props.onRequestClose}
+        onRequestClose={this.onRequestClose}
         isOpen={this.props.isOpen}
         handleChangeHours={this.handleChangeHours}
         handleChangeMinutes={this.handleChangeMinutes}
         handleChangeTask={this.handleChangeTask}
+        handleEnterPress={this.handleEnterPress}
       />
     );
   }
@@ -179,6 +181,21 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     this.setState({
       taskInput: event.target.value,
     });
+  }
+
+  private handleEnterPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      this.onAddOrEditTask();
+    }
+  }
+
+  private onRequestClose = () => {
+    this.setState({
+      emptyTask: false,
+      dateError: false,
+      taskExists: false,
+    })
+    this.props.onRequestClose()
   }
 }
 

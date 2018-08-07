@@ -16,56 +16,82 @@ export const ModalComponent = (props: IComponentProps) => {
     event.target.select();
   };
 
-  const renderTaskIsEmptyError = (emptyTask: boolean) => {
-    if (emptyTask) {
+  const renderTaskIsEmptyError = () => {
+    if (props.emptyTask) {
       return (
         <div className="error">Your task is empty!</div>
       );
     }
   };
 
-  const renderDateError = (dateError: boolean) => {
-    if (dateError) {
+  const renderDateError = () => {
+    if (props.dateError) {
       return (
         <div className="error">Date error!</div>
       );
     }
   };
 
-  const renderTaskExistsError = (taskExists: boolean) => {
-    if (taskExists) {
+  const renderTaskExistsError = () => {
+    if (props.taskExists) {
       return (
         <div className="error">This task already exists!</div>
       );
     }
   };
 
-  const renderTime = (date: Date) => {
-    const minutes = date.getMinutes() < 10 ? `0${date.getMinutes().toString()}` : date.getMinutes().toString();
-    return (
-      <div className="render__time">
-        <div className="render__time__label">Enter time:</div>
-        <input
-          className="render__time__input"
-          onChange={props.handleChangeHours}
-          defaultValue={date.getHours().toString()}
-          placeholder={date.getHours().toString()}
-          onFocus={handleFocus}
-        />
-        :
-        <input
-          className="render__time__input"
-          onChange={props.handleChangeMinutes}
-          defaultValue={minutes}
-          placeholder={minutes}
-          onFocus={handleFocus}
-        />
-      </div>
-    );
+  const renderTime = () => {
+    if (props.task) {
+      const date = props.task.date;
+      const minutes = date.getMinutes() < 10 ? `0${date.getMinutes().toString()}` : date.getMinutes().toString();
+      return (
+        <div className="render__time">
+          <div className="render__time__label">Enter time:</div>
+          <input
+            className="render__time__input"
+            onChange={props.handleChangeHours}
+            defaultValue={date.getHours().toString()}
+            placeholder={date.getHours().toString()}
+            onFocus={handleFocus}
+          />
+          :
+          <input
+            className="render__time__input"
+            onChange={props.handleChangeMinutes}
+            defaultValue={minutes}
+            placeholder={minutes}
+            onFocus={handleFocus}
+          />
+        </div>
+      )
+    } else {
+      const date = props.date;
+      const minutes = date.getMinutes() < 10 ? `0${date.getMinutes().toString()}` : date.getMinutes().toString();
+      return (
+        <div className="render__time">
+          <div className="render__time__label">Enter time:</div>
+          <input
+            className="render__time__input"
+            onChange={props.handleChangeHours}
+            defaultValue={date.getHours().toString()}
+            placeholder={date.getHours().toString()}
+            onFocus={handleFocus}
+          />
+          :
+          <input
+            className="render__time__input"
+            onChange={props.handleChangeMinutes}
+            defaultValue={minutes}
+            placeholder={minutes}
+            onFocus={handleFocus}
+          />
+        </div>
+      );
+    }
   };
 
-  const renderForm = (task: ITask) => {
-    if (!task) {
+  const renderForm = () => {
+    if (!props.task) {
       return (
         <input
           className="text__input"
@@ -82,7 +108,7 @@ export const ModalComponent = (props: IComponentProps) => {
           className="text__input"
           type="text"
           onChange={props.handleChangeTask}
-          defaultValue={task.value}
+          defaultValue={props.task.value}
           onFocus={handleFocus}
         />
       );
@@ -115,17 +141,19 @@ export const ModalComponent = (props: IComponentProps) => {
       className="modal"
       overlayClassName="overlay"
     >
-      {renderTaskExistsError(props.taskExists)}
-      {renderTaskIsEmptyError(props.emptyTask)}
-      {renderDateError(props.dateError)}
-      <Calendar
-        onClickDay={props.onClickDay}
-        locale="en"
-        value={props.date}
-      />
-      {renderForm(props.task)}
-      {renderTime(props.date)}
-      {renderButtons()}
+      <div onKeyPress={props.handleEnterPress}>
+        {renderTaskExistsError()}
+        {renderTaskIsEmptyError()}
+        {renderDateError()}
+        <Calendar
+          onClickDay={props.onClickDay}
+          locale="en"
+          value={props.date}
+        />
+        {renderForm()}
+        {renderTime()}
+        {renderButtons()}
+      </div>
     </ReactModal>
   );
 };

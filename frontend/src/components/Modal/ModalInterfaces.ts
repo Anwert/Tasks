@@ -14,6 +14,7 @@ export interface IComponentProps {
   handleChangeHours: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeMinutes: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeTask: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleEnterPress: (event: React.KeyboardEvent) => void;
 }
 
 export interface IOwnProps {
