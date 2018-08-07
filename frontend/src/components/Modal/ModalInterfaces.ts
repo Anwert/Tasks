@@ -1,7 +1,7 @@
 import { ITask } from "../../interfaces";
 
 export interface IComponentProps {
-  onAddOrEditTask: (hoursInput: string, minutesInput: string, taskInput: string) => void;
+  onAddOrEditTask: () => void;
   onDeleteTask: () => void;
   onClickDay: (date: Date) => void;
   emptyTask: boolean;
@@ -11,6 +11,9 @@ export interface IComponentProps {
   date: Date;
   isOpen: boolean;
   onRequestClose: () => void;
+  handleChangeHours: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeMinutes: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeTask: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IOwnProps {
@@ -25,6 +28,9 @@ export interface IOwnState {
   dateError: boolean;
   taskExists: boolean;
   date: Date;
+  hoursInput: string;
+  minutesInput: string;
+  taskInput: string;
 }
 
 export interface IConnectedStore {

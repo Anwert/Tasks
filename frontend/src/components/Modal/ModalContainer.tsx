@@ -35,11 +35,17 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
       dateError: false,
       taskExists: false,
       date: props.task ? props.task.date : props.date ? props.date : new Date(),
+      hoursInput: '',
+      minutesInput: '',
+      taskInput: '',
     };
     this.checkTasks = this.checkTasks.bind(this);
     this.onAddOrEditTask = this.onAddOrEditTask.bind(this);
     this.onDeleteTask = this.onDeleteTask.bind(this);
     this.onClickDay = this.onClickDay.bind(this);
+    this.handleChangeHours = this.handleChangeHours.bind(this);
+    this.handleChangeMinutes = this.handleChangeMinutes.bind(this);
+    this.handleChangeTask = this.handleChangeTask.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
@@ -61,11 +67,18 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
         date={this.state.date}
         onRequestClose={this.props.onRequestClose}
         isOpen={this.props.isOpen}
+        handleChangeHours={this.handleChangeHours}
+        handleChangeMinutes={this.handleChangeMinutes}
+        handleChangeTask={this.handleChangeTask}
       />
     );
   }
 
-  private checkTasks = function(hoursInput: string, minutesInput: string, taskInput: string) {
+  private checkTasks = function() {
+    const taskInput = this.state.taskInput;
+    const minutesInput = this.state.minutesInput;
+    const hoursInput = this.state.hoursInput;
+
     for (const task of this.props.tasks) {
       if (taskInput.toString() === task.value
       && this.state.date.getFullYear() === task.date.getFullYear()
@@ -79,13 +92,18 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     return false;
   };
 
-  private onAddOrEditTask = function(hoursInput: string, minutesInput: string, taskInput: string) {
+  private onAddOrEditTask = function() {
+      const taskInput = this.state.taskInput;
+      const minutesInput = this.state.minutesInput;
+      const hoursInput = this.state.hoursInput;
+
       let dateError = false;
       let emptyTask = false;
       let taskExists = false;
       this.setState({dateError: false});
       this.setState({emptyTask: false});
       this.setState({taskExists: false});
+
       if (+hoursInput > 23
         || +hoursInput < 0
         || +minutesInput > 59
@@ -96,14 +114,17 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
         this.setState({dateError: true});
         dateError = true;
       }
+
       if (taskInput.length < 1) {
         this.setState({emptyTask: true});
         emptyTask = true;
       }
-      if (this.checkTasks(hoursInput, minutesInput, taskInput)) {
+
+      if (this.checkTasks()) {
         this.setState({taskExists: true});
         taskExists = true;
       }
+
       if (dateError === false && emptyTask === false && taskExists === false) {
         this.task = {
           value: taskInput,
@@ -116,12 +137,14 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
           ),
           completed: false,
         };
+
         this.setState({dateError: false});
         this.setState({emptyTask: false});
         this.setState({taskExists: false});
         dateError = false;
         emptyTask = false;
         this.props.onRequestClose();
+
         if (this.props.task) {
           this.task = {_id: this.props.task._id, ...this.task};
           this.props.editTask(this.props.token, this.task);
@@ -139,6 +162,24 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
   private onClickDay = function(date: Date) {
     this.setState({date});
   };
+
+  private handleChangeHours = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      hoursInput: event.target.value,
+    });
+  }
+
+  private handleChangeMinutes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      minutesInput: event.target.value,
+    });
+  }
+
+  private handleChangeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      taskInput: event.target.value,
+    });
+  }
 }
 
 export const Modal: React.ComponentClass<IOwnProps> =
