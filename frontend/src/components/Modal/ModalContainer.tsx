@@ -51,17 +51,9 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     this.handleChangeHours = this.handleChangeHours.bind(this);
     this.handleChangeMinutes = this.handleChangeMinutes.bind(this);
     this.handleChangeTask = this.handleChangeTask.bind(this);
-    this.handleEnterPress = this.handleEnterPress.bind(this);
-    this.focusComponent = this.focusComponent.bind(this);
+    this.clearErrors = this.clearErrors.bind(this);
   }
 
-  public componentDidMount() {
-    this.focusComponent();
-  }
-
-  private focusComponent() {
-    this.component.current.focus();
-  }
 
   public componentWillReceiveProps(nextProps: IOwnProps) {
     if (this.props.date && nextProps.date !== this.state.date) {
@@ -71,23 +63,22 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
 
   public render() {
     return (
-      <div ref={this.component} onKeyPress={this.handleEnterPress}>
-        <ModalComponent
-          onAddOrEditTask={this.onAddOrEditTask}
-          onDeleteTask={this.onDeleteTask}
-          onClickDay={this.onClickDay}
-          emptyTask={this.state.emptyTask}
-          dateError={this.state.dateError}
-          taskExists={this.state.taskExists}
-          task={this.props.task}
-          date={this.state.date}
-          onRequestClose={this.onRequestClose}
-          isOpen={this.props.isOpen}
-          handleChangeHours={this.handleChangeHours}
-          handleChangeMinutes={this.handleChangeMinutes}
-          handleChangeTask={this.handleChangeTask}
-        />
-      </div>
+      <ModalComponent
+        onAddOrEditTask={this.onAddOrEditTask}
+        onDeleteTask={this.onDeleteTask}
+        onClickDay={this.onClickDay}
+        emptyTask={this.state.emptyTask}
+        dateError={this.state.dateError}
+        taskExists={this.state.taskExists}
+        task={this.props.task}
+        date={this.state.date}
+        onRequestClose={this.onRequestClose}
+        isOpen={this.props.isOpen}
+        handleChangeHours={this.handleChangeHours}
+        handleChangeMinutes={this.handleChangeMinutes}
+        handleChangeTask={this.handleChangeTask}
+        clearErrors={this.clearErrors}
+      />
     );
   }
 
@@ -180,6 +171,7 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     let newDate = this.state.date;
     newDate.setDate(date.getDate());
     this.setState({date: newDate});
+    this.clearErrors();
   };
 
   private handleChangeHours = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -200,10 +192,12 @@ class ModalContainer extends React.PureComponent<IConnectedStore & IConnectedDis
     });
   }
 
-  private handleEnterPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      this.onAddOrEditTask();
-    }
+  private clearErrors = () => {
+    this.setState({
+      emptyTask: false,
+      dateError: false,
+      taskExists: false,
+    })
   }
 
   private onRequestClose = () => {
