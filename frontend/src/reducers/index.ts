@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { IAction, IAuth, IStoreAll, ITask } from "../interfaces";
+import { IStoreAll } from "../interfaces";
 
 import auth from "./auth";
 
