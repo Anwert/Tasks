@@ -2,10 +2,6 @@ import * as React from "react";
 import Calendar from "react-calendar/dist/entry.nostyle";
 import * as ReactModal from "react-modal";
 
-import { ITask } from "../../interfaces";
-import { Find } from "../Find/FindContainer";
-import { MenuButton } from "../Menu/MenuButton";
-import { Modal } from "../Modal/ModalContainer";
 import { IComponentProps } from "./ModalInterfaces";
 
 ReactModal.setAppElement("#index");

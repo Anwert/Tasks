@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Redirect } from "react-router-dom";
 
-import { ITask } from "../../interfaces";
 import { Find } from "../Find/FindContainer";
 import { MenuButton } from "../Menu/MenuButton";
 import { Modal } from "../Modal/ModalContainer";

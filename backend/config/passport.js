@@ -30,7 +30,6 @@ const localLogin = new LocalStrategy(localOptions, function (email, password, do
     })
     // compare passwords - is `passowrd` equal to user.password?
   })
-
 });
 
 

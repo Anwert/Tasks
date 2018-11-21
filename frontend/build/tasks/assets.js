@@ -5,7 +5,6 @@ const combine = require('stream-combiner2').obj
 const gulpIf = require('gulp-if')
 const notify = require('gulp-notify')
 const rev = require('gulp-rev')
-const path = require('path')
 
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 

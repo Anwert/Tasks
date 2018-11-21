@@ -17,8 +17,6 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<IAction>): IConnectedDispat
 
 class FindContainer extends React.PureComponent<IConnectedDispatch> {
 
-  private findTaskInput: HTMLInputElement;
-
   public render() {
     return (
       <FindComponent

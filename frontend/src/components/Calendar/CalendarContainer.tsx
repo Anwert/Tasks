@@ -4,7 +4,7 @@ import * as redux from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
 import * as action from "../../actions";
-import { IAction, IStoreAll, ITask } from "../../interfaces";
+import { IStoreAll, ITask } from "../../interfaces";
 import { CalendarComponent } from "./CalendarComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnState } from "./CalendarInterfaces";
 

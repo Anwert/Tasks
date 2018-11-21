@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Action, ActionCreator, Dispatch } from "redux";
+import { ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 import { IAction, ITask } from "../interfaces";

@@ -4,7 +4,7 @@ import * as redux from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
 import * as action from "../../actions";
-import { IAction, IStoreAll, ITask } from "../../interfaces";
+import { IStoreAll, ITask } from "../../interfaces";
 import { TaskComponent } from "./TaskComponent";
 import { IConnectedDispatch, IConnectedStore, IOwnProps, IOwnState } from "./TaskInterfaces";
 

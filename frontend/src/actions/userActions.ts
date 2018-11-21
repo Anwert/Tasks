@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Action, ActionCreator, Dispatch } from "redux";
+import { ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 
-import { IAction, IAuth, IUser } from "../interfaces";
+import { IAction, IUser } from "../interfaces";
 
 // authentication
 export const signinUser: ActionCreator<ThunkAction<void, undefined, undefined, IAction>> = (user: IUser) => {
